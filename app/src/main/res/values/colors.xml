@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="dot_dark_1">#493521</color>
+    <color name="dot_dark_2">#d00031</color>
+    <color name="dot_dark_3">#ff9600</color>
+
+    <color name="dot_light_1">#fcffc8</color>
+    <color name="dot_light_2">#b9ecb1</color>
+    <color name="dot_light_3">#c2ffd2</color>
+
+    <color name="buttons_welcome">#41bd10</color>
+    <color name="button_welcome_txt">#459c37</color>
+    <color name="white">#ffffff</color>
+
+    <array name="dot_active">
+
+    </array>
+
+    <array name="dot_inactive">
+
+    </array>
+</resources>
