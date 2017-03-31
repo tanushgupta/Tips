@@ -27,8 +27,6 @@ public class TipsMainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frag_layout;
-    //private FragmentManager fragmentManager;
-    //private FragmentTransaction fragmentTransaction;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,19 +35,13 @@ public class TipsMainActivity extends AppCompatActivity {
 
         frag_layout = (FrameLayout) findViewById(R.id.fragment_layout);
 
-        bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.navBottomBar);
+        bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigate_Bottom_Bar);
 
         if(savedInstanceState != null){
             return;
         }
-
-        //final CreateFragment fragment = new CreateFragment();
-        //getSupportFragmentManager().beginTransaction().add(frag_layout,fragment).commit();
-
         android.app.FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         final AdvisersFragment advfragment = new AdvisersFragment();
         final OrdersFragment ordfragment = new OrdersFragment();
         final TipsFragment fragment = new TipsFragment();
@@ -61,29 +53,22 @@ public class TipsMainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.tips_Menu:
+                            case R.id.menu_item_tips:
                                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                // Replace whatever is in the fragment_container view with this fragment,
-                                // and add the transaction to the back stack so the user can navigate back
                                 fragmentTransaction.replace(R.id.fragment_layout, fragment);
                                 fragmentTransaction.addToBackStack(null);
-
                                 // Commit the transaction
                                 fragmentTransaction.commit();
                                 break;
-                            case R.id.order_Menu:
+                            case R.id.menu_item_order:
                                 FragmentTransaction adfragmentTransaction = getFragmentManager().beginTransaction();
-                                // Replace whatever is in the fragment_container view with this fragment,
-                                // and add the transaction to the back stack so the user can navigate back
                                 adfragmentTransaction.replace(R.id.fragment_layout, ordfragment);
                                 adfragmentTransaction.addToBackStack(null);
                                 // Commit the transaction
                                 adfragmentTransaction.commit();
                                 break;
-                            case R.id.adviser_Menu:
+                            case R.id.menu_item_advisor:
                                 FragmentTransaction ordfragmentTransaction = getFragmentManager().beginTransaction();
-                                // Replace whatever is in the fragment_container view with this fragment,
-                                // and add the transaction to the back stack so the user can navigate back
                                 ordfragmentTransaction.replace(R.id.fragment_layout, advfragment);
                                 ordfragmentTransaction.addToBackStack(null);
                                 // Commit the transaction

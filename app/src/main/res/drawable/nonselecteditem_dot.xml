@@ -5,5 +5,5 @@
     android:dither="true" >
     <size android:height="10dip"
         android:width="10dip" />
-    <solid android:color="@color/dot_dark_3" />
+    <solid android:color="@color/dot_not_selected" />
 </shape>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.TipsMainActivity">
+    <item
+        android:id="@+id/menu_item_tips"
+        android:title="@string/tips"
+        android:icon="@drawable/ic_tab_tips"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/menu_item_advisor"
+        android:title="@string/advisers"
+        android:icon="@drawable/ic_tab_advisor"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/menu_item_order"
+        android:title="@string/orders"
+        android:icon="@drawable/ic_tab_orders"
+        app:showAsAction="ifRoom"
+        />
+</menu>

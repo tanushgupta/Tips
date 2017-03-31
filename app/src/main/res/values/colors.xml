@@ -15,6 +15,7 @@
     <color name="buttons_welcome">#41bd10</color>
     <color name="button_welcome_txt">#459c37</color>
     <color name="white">#ffffff</color>
+    <color name="dot_not_selected">#030303</color>
 
     <array name="dot_active">
 
