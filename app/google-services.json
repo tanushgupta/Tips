@@ -1,0 +1,187 @@
+{
+  "project_info": {
+    "project_number": "976203959966",
+    "firebase_url": "https://testapp-bc918.firebaseio.com",
+    "project_id": "testapp-bc918",
+    "storage_bucket": "testapp-bc918.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976203959966:android:e496a6a31097c36c",
+        "android_client_info": {
+          "package_name": "dhru1.example.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976203959966-phhbglr7iiiuhmsmlr2n3lq50pe584kp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dhru1.example.com",
+            "certificate_hash": "92028552490a97f4b7435c8fc10d2a8ec0cd9276"
+          }
+        },
+        {
+          "client_id": "976203959966-esghekn96tavgsd2ae68qeijbgj8um5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTaXawRZQOoNFSlUyydW2OVjX0tNM1HUk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976203959966-esghekn96tavgsd2ae68qeijbgj8um5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976203959966:android:da4bec7c484fcd11",
+        "android_client_info": {
+          "package_name": "com.shunyastart.dhrumil.onetouchconsumerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976203959966-clc5prk9dmrs6b8dk54qk6hgu139j3uc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shunyastart.dhrumil.onetouchconsumerapp",
+            "certificate_hash": "92028552490a97f4b7435c8fc10d2a8ec0cd9276"
+          }
+        },
+        {
+          "client_id": "976203959966-esghekn96tavgsd2ae68qeijbgj8um5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTaXawRZQOoNFSlUyydW2OVjX0tNM1HUk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976203959966-esghekn96tavgsd2ae68qeijbgj8um5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976203959966:android:cca142dab3978090",
+        "android_client_info": {
+          "package_name": "com.shunyastart.dhrumil.a1touchanalyst"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976203959966-v7dq1iqtotpu8a1oiaddknmu255dlb5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shunyastart.dhrumil.a1touchanalyst",
+            "certificate_hash": "92028552490a97f4b7435c8fc10d2a8ec0cd9276"
+          }
+        },
+        {
+          "client_id": "976203959966-esghekn96tavgsd2ae68qeijbgj8um5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTaXawRZQOoNFSlUyydW2OVjX0tNM1HUk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976203959966-esghekn96tavgsd2ae68qeijbgj8um5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976203959966:android:62031f38b35d4537",
+        "android_client_info": {
+          "package_name": "com.symphonyfintech.tips"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976203959966-0v7kolt3n634qa6omvfg1gapcls33hbs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.symphonyfintech.tips",
+            "certificate_hash": "f1c87b70cad259d9cd186f40909e9770b7d5567a"
+          }
+        },
+        {
+          "client_id": "976203959966-esghekn96tavgsd2ae68qeijbgj8um5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTaXawRZQOoNFSlUyydW2OVjX0tNM1HUk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976203959966-esghekn96tavgsd2ae68qeijbgj8um5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

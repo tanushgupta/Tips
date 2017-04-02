@@ -7,4 +7,7 @@
     <string name="tips">Tips</string>
     <string name="advisers">Advisers</string>
     <string name="orders">Orders</string>
+    <string name="authFailed">Login Failed</string>
+    <string name="auth_signup_failed">User not created.</string>
+    <string name="auth_login_failed">Login failed.</string>
 </resources>

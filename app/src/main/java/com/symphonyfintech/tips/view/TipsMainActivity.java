@@ -3,6 +3,7 @@ package com.symphonyfintech.tips.view;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.User;
 
@@ -78,12 +81,22 @@ public class TipsMainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-        Intent i = getIntent();
-        User user = (User)i.getSerializableExtra("User");
-
-        Log.d("Username: ", user.getUsername());
-        Log.d("EmailID: ", user.getEmailid());
-        Log.d("Password: ", user.getPassword());
+        //Intent i = getIntent();
+        //User user = (User)i.getSerializableExtra("User");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            //String name = user.getDisplayName();
+            String email = user.getEmail();
+            String uid = user.getUid();
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getToken() instead.
+            Log.d("Username: ", uid);
+            if(email != null){
+                Log.d("EmailID: ", email);
+            }
+        }
     }
 
     @Override

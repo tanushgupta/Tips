@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.CustomSwipeAdapter;
 import com.symphonyfintech.tips.adapters.LoginAdapter;
@@ -24,6 +32,8 @@ import static android.R.attr.value;
 
 public class WelcomeActivity extends AppCompatActivity implements OnClickListener{
 
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private ViewPager viewPager;
     private ImageView[] dots;
     private LinearLayout dotLayout;
@@ -50,7 +60,24 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
         init();
         setUI();
         findViewById(R.id.btn_sign_in).setOnClickListener(this);
+        findViewById(R.id.btn_guest_login).setOnClickListener(this);
+        findViewById(R.id.btn_sign_up).setOnClickListener(this);
         viewPager.addOnPageChangeListener(viewListener);
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d("Already Logged In", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d("No User Signed In", "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
     }
 
     @Override
@@ -64,13 +91,9 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
             mLogin.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String email = mEmail.getText().toString();
-                    String password = mPassword.getText().toString();
-                    if(email.equals("")){mEmail.setError("Enter an Email");}
-                    else{
-                        if(password.equals("")){mPassword.setError("Enter a password!");}
-                        else{Login(email,password);}
-                    }
+                String email = mEmail.getText().toString();
+                String password = mPassword.getText().toString();
+                signInUser(email, password);
                 }
             });
             mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -84,6 +107,13 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
             dialog = mBuilder.create();
             dialog.show();
         }
+        else if(v == findViewById(R.id.btn_guest_login)){
+            anonymousLogin();
+        }
+        else if(v == findViewById(R.id.btn_sign_up)){
+
+        }
+
     }
 
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
@@ -100,59 +130,6 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
         public void onPageScrollStateChanged(int state) {
         }
     };
-
-    /*@UiThread
-    private void UIThread(){
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-
-                Log.d("UI thread", "To create image pane.");
-            }
-        });
-    }*/
-
-    private void Login(final String emailid, final String password){
-        // Validate login
-        Intent intent = new Intent(WelcomeActivity.this, TipsMainActivity.class);
-        intent.putExtra("User", new User("tanush","tanush","tanush"));
-        WelcomeActivity.this.startActivity(intent);
-        //finish();
-        //LoginAdapter login_adap = new LoginAdapter(emailid,password);
-        //progress = ProgressDialog.show(getBaseContext(), "Validating", "Please Wait", true);
-        /*Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                final int res = login_adap.validateUser();
-                progress.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        switch (res){
-                            case 1:
-                                mEmail.setError("Incorrect Email");
-                                break;
-                            case 2:
-                                mPassword.setError("Invalid password!");
-                                break;
-                            case 3:
-                                Toast.makeText(getBaseContext(),"Login Successful",Toast.LENGTH_SHORT).show();
-                                user = new User("tanush1122","tanush@gmail.com","Tanush");
-                                intent = new Intent(WelcomeActivity.this, TipsMainActivity.class);
-                                intent.putExtra("User", user);
-                                WelcomeActivity.this.startActivity(intent);
-                                finish();
-                                break;
-                            default:
-                                Toast.makeText(getBaseContext(),"Login unsuccessful, Please try again",Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                        progress.setProgress(value);
-                    }
-                });
-            }
-        };
-        new Thread(runnable).start();*/
-    }
 
     private void setUI(){
         int dot_count = img_count;
@@ -208,6 +185,91 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
         if (dialog !=null && dialog.isShowing() ){
             dialog.cancel();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    private void signUpUser(final String email,final String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("Sign Up: ", "createUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getBaseContext(), R.string.auth_signup_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+    private void signInUser(final String email,final String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("Login: ", "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w("Login: ", "signInWithEmail:failed", task.getException());
+                            Toast.makeText(getBaseContext(), R.string.auth_login_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Intent intent = new Intent(WelcomeActivity.this, TipsMainActivity.class);
+                            WelcomeActivity.this.startActivity(intent);
+                            finish();
+                        }
+                        // ...
+                    }
+                });
+    }
+
+    private void anonymousLogin(){
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("Guest Login", "signInAnonymously:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w("Guest Login Failed: ", "signInAnonymously", task.getException());
+                            Toast.makeText(getBaseContext(), R.string.auth_login_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Intent intent = new Intent(WelcomeActivity.this, TipsMainActivity.class);
+                            WelcomeActivity.this.startActivity(intent);
+                            finish();
+                        }
+
+                        // ...
+                    }
+                });
     }
 
     @Override
