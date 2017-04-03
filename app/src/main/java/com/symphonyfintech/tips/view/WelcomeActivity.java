@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -111,7 +110,8 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
             anonymousLogin();
         }
         else if(v == findViewById(R.id.btn_sign_up)){
-
+            Intent intent = new Intent(WelcomeActivity.this, SignUpActivity.class);
+            WelcomeActivity.this.startActivity(intent);
         }
 
     }

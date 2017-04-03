@@ -10,4 +10,9 @@
     <string name="authFailed">Login Failed</string>
     <string name="auth_signup_failed">User not created.</string>
     <string name="auth_login_failed">Login failed.</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="txt_sign_up">Sign Up</string>
+    <string name="sign_up_failed">Sign Up Failed</string>
+    <string name="sign_up_successful">User created.</string>
+    <string name="empty_field">Please fill in all data.</string>
 </resources>
