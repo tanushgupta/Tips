@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5sp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/txt_tip_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="Symbol"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/dot_not_selected"
+            android:layout_alignParentTop="true"/>
+
+        <TextView
+            android:id="@+id/txt_tip_side"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Buy @ blah blah "
+            android:layout_alignParentTop="true"/>
+
+        <TextView
+            android:id="@+id/txt_status_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="ACTIVE"
+            android:padding="2dp"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimaryDark"
+            android:layout_alignParentTop="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Live"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/dot_not_selected"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Target Price"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/dot_not_selected"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop Loss"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/dot_not_selected"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/txt_live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Symbol"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/dot_not_selected"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/txt_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Target Price"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/dot_not_selected"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/txt_stplss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop Loss"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/dot_not_selected"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/txt_post_adv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Posted By: "/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"/>
+</LinearLayout>

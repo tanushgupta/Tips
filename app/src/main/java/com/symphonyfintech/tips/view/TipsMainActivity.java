@@ -10,17 +10,25 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.symphonyfintech.tips.R;
+import com.symphonyfintech.tips.adapters.CustomListAdapter;
+import com.symphonyfintech.tips.model.Tip;
 import com.symphonyfintech.tips.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Tanush on 3/29/2017.
@@ -37,7 +45,6 @@ public class TipsMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_tips);
 
         frag_layout = (FrameLayout) findViewById(R.id.fragment_layout);
-
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigate_Bottom_Bar);
 
         if(savedInstanceState != null){
@@ -60,6 +67,7 @@ public class TipsMainActivity extends AppCompatActivity {
                                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                 fragmentTransaction.replace(R.id.fragment_layout, fragment);
                                 fragmentTransaction.addToBackStack(null);
+
                                 // Commit the transaction
                                 fragmentTransaction.commit();
                                 break;
@@ -67,6 +75,7 @@ public class TipsMainActivity extends AppCompatActivity {
                                 FragmentTransaction adfragmentTransaction = getFragmentManager().beginTransaction();
                                 adfragmentTransaction.replace(R.id.fragment_layout, ordfragment);
                                 adfragmentTransaction.addToBackStack(null);
+
                                 // Commit the transaction
                                 adfragmentTransaction.commit();
                                 break;
@@ -74,6 +83,7 @@ public class TipsMainActivity extends AppCompatActivity {
                                 FragmentTransaction ordfragmentTransaction = getFragmentManager().beginTransaction();
                                 ordfragmentTransaction.replace(R.id.fragment_layout, advfragment);
                                 ordfragmentTransaction.addToBackStack(null);
+
                                 // Commit the transaction
                                 ordfragmentTransaction.commit();
                                 break;
@@ -105,11 +115,28 @@ public class TipsMainActivity extends AppCompatActivity {
     }
 
     public static class TipsFragment extends Fragment {
+        private RecyclerView mRecyclerView;
+        private RecyclerView.Adapter mAdapter;
+        private List<Tip> tips;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_tips, container, false);
             // Inflate the layout for this fragment
-            return inflater.inflate(R.layout.fragment_tips, container, false);
+            mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_tips);
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            //mRecyclerView.setHasFixedSize(true);
+
+            // use a linear layout manager
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));;
+
+            //String[] mydata = {"test","test1","test2","test3","test4"};
+            tips = new Tip().createTipsList(10);
+            // specify an adapter (see also next example)
+            mAdapter = new CustomListAdapter(getActivity(),tips);
+            mRecyclerView.setAdapter(mAdapter);
+            return view;
         }
     }
 
