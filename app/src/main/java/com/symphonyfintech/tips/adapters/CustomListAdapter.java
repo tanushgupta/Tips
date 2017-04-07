@@ -2,13 +2,14 @@ package com.symphonyfintech.tips.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.Tip;
+
 import java.util.List;
 
 /**
@@ -31,14 +32,20 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
         public TextView tip_target;
         public TextView tip_stploss;
         public TextView tip_adv;
+        public View mView;
+        // Store the context for easy access
+        public Context mContext;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(View itemView) {
+        public ViewHolder(Context context,View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
 
+            mContext =context;
+            Log.d("Trace: ", "Initialized View Holer");
+            mView = itemView;
             symbol_name = (TextView) itemView.findViewById(R.id.txt_tip_name);
             order_side = (TextView) itemView.findViewById(R.id.txt_tip_side);
             tip_type = (TextView) itemView.findViewById(R.id.txt_status_tip);
@@ -49,11 +56,11 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
         }
     }
 
-    // Store the context for easy access
     private Context mContext;
 
     // Pass in the contact array into the constructor
     public CustomListAdapter(Context context, List<Tip> tips) {
+        Log.d("Trace: ", "Inside Adapter constructor");
         mTip = tips;
         mContext = context;
     }
@@ -69,27 +76,35 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
+        Log.d("Trace: ", "Inside Custom Holder constructor");
+
         // Inflate the custom layout
         View contactView = inflater.inflate(R.layout.fragment_list_items, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(contactView);
+        ViewHolder viewHolder = new ViewHolder(mContext,contactView);
         return viewHolder;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Tip tip = mTip.get(position);
-
+        final Tip tip = mTip.get(position);
+        Log.d("Symbol: ", "**************************" + tip.getSymbol() + "***************************");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogTipDetail(mContext,tip);
+            }
+        });
         // Set item views based on your views and data model
-        ((TextView)holder.symbol_name).setText(tip.getmSymName());
-        ((TextView)holder.order_side).setText(tip.getmSymSide());
-        ((TextView)holder.tip_type).setText(tip.getmSymType());
-        ((TextView)holder.tip_live).setText(tip.getmLiveprc());
-        ((TextView)holder.tip_target).setText(tip.getmTargetprc());
-        ((TextView)holder.tip_stploss).setText(tip.getmStploss());
-        ((TextView)holder.tip_adv).setText(tip.getmPostAdv());
+        ((TextView)holder.symbol_name).setText(tip.getSymbol());
+        ((TextView)holder.order_side).setText(tip.getSide());
+        ((TextView)holder.tip_type).setText("ACTIVE");
+        ((TextView)holder.tip_live).setText(tip.getPrice());
+        ((TextView)holder.tip_target).setText(tip.getTargetPrice());
+        ((TextView)holder.tip_stploss).setText(tip.getStopLoss());
+        ((TextView)holder.tip_adv).setText(tip.getTipSenderID());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
