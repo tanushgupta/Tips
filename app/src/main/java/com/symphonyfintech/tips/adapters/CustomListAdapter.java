@@ -1,6 +1,9 @@
 package com.symphonyfintech.tips.adapters;
 
+import android.app.Fragment;
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.Tip;
+import com.symphonyfintech.tips.view.TipDetailFragment;
+import com.symphonyfintech.tips.view.TipsMainActivity;
 
 import java.util.List;
 
@@ -17,7 +22,6 @@ import java.util.List;
  */
 
 public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.ViewHolder> {
-    //private String[] mDataset;
     private List<Tip> mTip;
 
     // Provide a direct reference to each of the views within a data item
@@ -38,13 +42,12 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(Context context,View itemView) {
+        public ViewHolder(Context context, View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            mContext =context;
-            Log.d("Trace: ", "Initialized View Holer");
+            mContext = context;
             mView = itemView;
             symbol_name = (TextView) itemView.findViewById(R.id.txt_tip_name);
             order_side = (TextView) itemView.findViewById(R.id.txt_tip_side);
@@ -72,17 +75,14 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
 
     // Create new views (invoked by the layout manager)
     @Override
-    public CustomListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
+    public CustomListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        Log.d("Trace: ", "Inside Custom Holder constructor");
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.fragment_list_items, parent, false);
+        View contactView = LayoutInflater.from(context).inflate(R.layout.fragment_list_items, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(mContext,contactView);
+        ViewHolder viewHolder = new ViewHolder(mContext, contactView);
         return viewHolder;
     }
 
@@ -90,21 +90,22 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Tip tip = mTip.get(position);
-        Log.d("Symbol: ", "**************************" + tip.getSymbol() + "***************************");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogTipDetail(mContext,tip);
+                //fragmentJump(tip);
+                //new DialogTipDetail(mContext,tip);
+                ((TipsMainActivity) mContext).openDetailTipFragment(tip);
             }
         });
         // Set item views based on your views and data model
-        ((TextView)holder.symbol_name).setText(tip.getSymbol());
-        ((TextView)holder.order_side).setText(tip.getSide());
-        ((TextView)holder.tip_type).setText("ACTIVE");
-        ((TextView)holder.tip_live).setText(tip.getPrice());
-        ((TextView)holder.tip_target).setText(tip.getTargetPrice());
-        ((TextView)holder.tip_stploss).setText(tip.getStopLoss());
-        ((TextView)holder.tip_adv).setText(tip.getTipSenderID());
+        ((TextView) holder.symbol_name).setText(tip.getSymbol());
+        ((TextView) holder.order_side).setText(tip.getSide());
+        ((TextView) holder.tip_type).setText("ACTIVE");
+        ((TextView) holder.tip_live).setText(tip.getPrice());
+        ((TextView) holder.tip_target).setText(tip.getTargetPrice());
+        ((TextView) holder.tip_stploss).setText(tip.getStopLoss());
+        ((TextView) holder.tip_adv).setText(tip.getTipSenderID());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
