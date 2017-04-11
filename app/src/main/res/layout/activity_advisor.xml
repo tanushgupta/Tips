@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:fitsSystemWindows="true"
+        android:layout_height="283dp"
+        android:layout_width="match_parent">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:toolbarId="@+id/toolbar"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
+            app:contentScrim="?attr/colorPrimary">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="212dp"
+                app:srcCompat="@drawable/profilephotodefaultw"
+                android:id="@+id/profilepicImg" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+
+        <RelativeLayout
+            android:id="@+id/activity_advisor_listcom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="0dp"
+            tools:context="com.shunyastart.dhrumil.onetouchconsumerapp.Advisor">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:id="@+id/cardView">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:text="50"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/show_adv_tipcount"
+                            android:layout_alignBaseline="@+id/textView12"
+                            android:layout_alignBottom="@+id/textView12"
+                            android:layout_alignStart="@+id/textView15"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:text="60"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/show_adv_tipcount"
+                            android:layout_alignStart="@+id/textView20"
+                            android:id="@+id/show_adv_tipExecuted"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:text="LAST POSTED ON"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView11"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignStart="@+id/show_adv_tip_description"
+                            android:layout_marginTop="29dp" />
+
+                        <TextView
+                            android:text="26 Jan ,2017"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView12"
+                            android:layout_below="@+id/textView20"
+                            android:layout_alignStart="@+id/textView11"
+                            android:layout_marginTop="9dp"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:text="EXECUTION COUNT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView20"
+                            android:layout_alignTop="@+id/textView15"
+                            android:layout_alignEnd="@+id/show_adv_tip_description" />
+
+                        <TextView
+                            android:text='"praveen kumar is versatile trader with expiriance of 30+ in the stock market around the world . he is now setteled in mumbai and is enthusiastic about the invesment opportunity in india"'
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/show_adv_tip_description"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/cardview_dark_background"
+                            android:layout_marginTop="13dp"
+                            android:layout_below="@+id/show_adv_tipcount" />
+
+                        <TextView
+                            android:text="ON. OF TIPS"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView15"
+                            android:layout_alignBaseline="@+id/textView11"
+                            android:layout_alignBottom="@+id/textView11"
+                            android:layout_toStartOf="@+id/textView20"
+                            android:layout_marginEnd="43dp" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    app:cardBackgroundColor="#dddddd">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:text="TIP POSTED BY DHRUMIL SHAH"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tippostedBy"
+                            android:textSize="20sp"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/colorPrimary"
+                            android:textStyle="normal|bold" />
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tipsbyUser"
+                    android:layout_marginTop="5dp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

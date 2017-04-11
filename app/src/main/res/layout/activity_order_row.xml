@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_order_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.shunyastart.dhrumil.orders.orderRow">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="93dp">
+
+            <TextView
+                android:text="LIVE PRICE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView25"
+                android:layout_centerVertical="true"
+                android:layout_alignStart="@+id/close_order_symbol" />
+
+            <TextView
+                android:text="RELIANCE-EQ               "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/close_order_symbol"
+                android:textSize="20sp"
+                android:layout_marginTop="7dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal|bold"
+                android:layout_alignEnd="@+id/close_order_income" />
+
+            <TextView
+                android:text="TOTAL PROFIT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="116dp"
+                android:id="@+id/close_order_status" />
+
+            <TextView
+                android:text="Rs. 10000.00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="116dp"
+                android:layout_marginBottom="15dp"
+                android:id="@+id/close_order_income"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:text="REMARK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="57dp"
+                android:id="@+id/textView29" />
+
+            <TextView
+                android:text="Stop Loss Hit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/close_order_remark"
+                android:layout_alignBaseline="@+id/close_order_income"
+                android:layout_alignBottom="@+id/close_order_income"
+                android:layout_alignStart="@+id/textView29"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:text="Rs. 10000.00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/livePrice"
+                android:layout_alignBaseline="@+id/close_order_income"
+                android:layout_alignBottom="@+id/close_order_income"
+                android:layout_alignStart="@+id/textView25"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:text="Bought At"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/close_order_side"
+                android:textStyle="normal|bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginEnd="14dp"
+                android:layout_alignBaseline="@+id/close_order_pice"
+                android:layout_alignBottom="@+id/close_order_pice"
+                android:layout_toStartOf="@+id/close_order_pice" />
+
+            <TextView
+                android:text="Rs. 10000.00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/close_order_pice"
+                android:textStyle="normal|bold"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="textStart"
+                android:layout_alignTop="@+id/close_order_symbol"
+                android:layout_alignEnd="@+id/close_order_remark"
+                android:layout_marginEnd="16dp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

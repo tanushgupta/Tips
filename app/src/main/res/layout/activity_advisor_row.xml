@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_advisor_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.shunyastart.dhrumil.onetouchconsumerapp.advisor_row">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/cardView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <ImageView
+                android:layout_width="46dp"
+                android:layout_height="41dp"
+                app:srcCompat="@drawable/symphonydefaulticon"
+                android:layout_marginStart="9dp"
+                android:id="@+id/tiprow_profileIcon"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="9dp" />
+
+            <TextView
+                android:text="Unknown user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="74dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/tiprow_analystName"
+                android:textColor="@android:color/black"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_tip_count"
+                android:layout_alignBottom="@+id/tiprow_profileIcon"
+                android:layout_alignStart="@+id/tiprow_analystName" />
+
+            <TextView
+                android:text="Tips "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:id="@+id/txtkdncjd"
+                android:layout_alignBaseline="@+id/txt_tip_count"
+                android:layout_alignBottom="@+id/txt_tip_count"
+                android:layout_toEndOf="@+id/txt_tip_count"
+                android:textSize="10sp" />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:id="@+id/tiprow_executedTipCount"
+                android:layout_alignBaseline="@+id/txtkdncjd"
+                android:layout_alignBottom="@+id/txtkdncjd"
+                android:layout_toEndOf="@+id/txtkdncjd" />
+
+            <TextView
+                android:text="Tip Execution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView22"
+                android:layout_marginStart="9dp"
+                android:layout_alignBaseline="@+id/tiprow_executedTipCount"
+                android:layout_alignBottom="@+id/tiprow_executedTipCount"
+                android:layout_toEndOf="@+id/tiprow_executedTipCount"
+                android:textSize="10sp" />
+
+            <TextView
+                android:text="*"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
+                android:id="@+id/textView23"
+                android:layout_alignBaseline="@+id/tiprow_analystName"
+                android:layout_alignBottom="@+id/tiprow_analystName"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
