@@ -10,7 +10,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.shunyastart.dhrumil.onetouchconsumerapp.HomeActivity"
+    tools:context=".view.general.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
     <android.support.v7.widget.RecyclerView

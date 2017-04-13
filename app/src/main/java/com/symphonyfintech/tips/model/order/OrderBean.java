@@ -5,14 +5,14 @@ package com.symphonyfintech.tips.model.order;
  */
 
 public class OrderBean {
-    String OrderId;
-    String Symbol;
-    String price;
-    String side;
-    String Remark;
-    String QTY;
-    String status;
-    String TotalIncome;
-    String instrumentID;
-    String livePrice="NA";
+    public String OrderId;
+    public String Symbol;
+    public String price;
+    public String side;
+    public String Remark;
+    public String QTY;
+    public String status;
+    public String TotalIncome;
+    public String instrumentID;
+    public String livePrice="NA";
 }

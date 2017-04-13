@@ -21,14 +21,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.general.SignUpActivity"></activity>
-        <activity android:name=".view.tips.TipsMainActivity"></activity>
+        <activity android:name=".view.general.SignUpActivity">
+        </activity>
+        <activity android:name=".view.tips.TipsMainActivity">
+        </activity>
         <activity android:name=".view.general.ScrollingActivity"></activity>
         <activity android:name=".view.tips.TipRow"></activity>
-        <activity android:name=".view.advisors.Advisor"></activity>
-        <activity android:name=".view.advisors.AdvisorList"></activity>
+        <activity
+            android:name=".view.advisors.Advisor"
+            android:parentActivityName=".view.advisors.AdvisorList">
+        </activity>
+        <activity
+            android:name=".view.advisors.AdvisorList"
+            android:parentActivityName=".view.general.HomeActivity">
+        </activity>
         <activity android:name=".view.advisors.advisor_row"></activity>
-        <activity android:name=".view.general.HomeActivity"></activity>
+        <activity
+            android:name=".view.general.HomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".view.orders.Orders"
+            android:label="@string/label_orders"
+            android:parentActivityName=".view.general.HomeActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.dataAdapter.simpleDataFech;
+import com.symphonyfintech.tips.view.orders.Orders;
 import com.symphonyfintech.tips.adapters.tipsAdapter.TipAdapter;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.view.advisors.AdvisorList;
@@ -128,7 +129,6 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -141,17 +141,27 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_camera) {
-            advisor_intent = new Intent(getBaseContext(), AdvisorList.class);
-            advisor_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            startActivity(advisor_intent);
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            /*
-            advisor_intent = new Intent(getBaseContext(), Orders.class);
-            advisor_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            startActivity(advisor_intent);
+        switch(id){
+            /*case R.id.nav_tips:
+                advisor_intent = new Intent(getBaseContext(), HomeActivity.class);
+                advisor_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                startActivity(advisor_intent);
+                break;
             */
+            case R.id.nav_advisors:
+                advisor_intent = new Intent(getBaseContext(), AdvisorList.class);
+                advisor_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                startActivity(advisor_intent);
+                break;
+            case R.id.nav_orders:
+                advisor_intent = new Intent(getBaseContext(), Orders.class);
+                advisor_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                startActivity(advisor_intent);
+                break;
+            case R.id.nav_logout:
+                break;
+            default:
+                break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

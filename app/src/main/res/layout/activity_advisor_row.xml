@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_advisor_row"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.shunyastart.dhrumil.onetouchconsumerapp.advisor_row">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

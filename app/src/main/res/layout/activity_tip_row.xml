@@ -67,7 +67,10 @@
         android:layout_marginBottom="9dp"
         android:id="@+id/send_ordr_Execute"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_rounded_corner"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
 
     <EditText
         android:layout_width="wrap_content"
