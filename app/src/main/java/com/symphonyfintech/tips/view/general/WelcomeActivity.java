@@ -18,6 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,6 +32,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.CustomAdapter.CustomSwipeAdapter;
+import com.symphonyfintech.tips.adapters.CustomAdapter.LoginAdapter;
+import com.symphonyfintech.tips.model.tips.Tip;
+import com.symphonyfintech.tips.view.tips.TipsMainActivity;
+
+import org.json.JSONObject;
 
 public class WelcomeActivity extends AppCompatActivity implements OnClickListener{
 
@@ -80,16 +92,19 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
     public void onClick(View v) {
         if(v == findViewById(R.id.btn_sign_in)){
             final AlertDialog.Builder mBuilder = new AlertDialog.Builder(WelcomeActivity.this);
-            View mView = getLayoutInflater().inflate(R.layout.activity_login, null);
+            final View mView = getLayoutInflater().inflate(R.layout.activity_login, null);
             final EditText mEmail = (EditText) mView.findViewById(R.id.input_email);
             final EditText mPassword = (EditText) mView.findViewById(R.id.input_password);
             Button mLogin = (Button) mView.findViewById(R.id.btn_login);
             mLogin.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                String email = mEmail.getText().toString();
-                String password = mPassword.getText().toString();
-                signInUser(email, password);
+                    String email = mEmail.getText().toString();
+                    String password = mPassword.getText().toString();
+                    //signInUser(email, password);
+                    //launchRingDialog(mView);
+                    //new LoginAdapter(email,password,getBaseContext());
+                    new BackgroundActivity().execute(new String[]{email,password});
                 }
             });
             mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -258,7 +273,7 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
                                     Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);
+                            Intent intent = new Intent(WelcomeActivity.this, TipsMainActivity.class);
                             WelcomeActivity.this.startActivity(intent);
                             finish();
                         }
@@ -273,7 +288,11 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
         moveTaskToBack(true);
     }
 
-    private class BackgroundActivity extends AsyncTask<String,Void,String>{
+    private class BackgroundActivity extends AsyncTask<String[],Void,String>{
+        private RequestQueue queue;
+        private final String url = "http://103.69.169.2:19003/login/";
+        private String errorMsg ="";
+        //private LoginAdapter loginAdapter;
 
         @Override
         protected void onPreExecute() {
@@ -281,16 +300,48 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
         }
 
         @Override
-        protected String doInBackground(String... params) {
-
+        protected String doInBackground(String[]... params) {
+            String[] cred = params[0];
+            //loginAdapter = new LoginAdapter(cred[0],cred[1],getBaseContext());
+            queue = Volley.newRequestQueue(getBaseContext());
+            JSONObject obj = new JSONObject();
+            try{
+                obj.put("username",cred[0]);
+                obj.put("password",cred[1]);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, obj, new Response.Listener() {
+                @Override
+                public void onResponse(Object response) {
+                    //Toast.makeText(,"Login "+ response.toString(),Toast.LENGTH_LONG).show();
+                    Log.i("Login: ", response.toString());
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i("Error ",error.toString());
+                    errorMsg = error.toString();
+                }
+            });
+            queue.add(jsObjRequest);
             return "Done";
         }
-
         // This runs in UI when background thread finishes
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
+            //Log.i("Res: ","" + loginAdapter.getResult());
+            if(errorMsg.isEmpty()){
+                Toast.makeText(getBaseContext(),"Login Sucessful",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);
+                WelcomeActivity.this.startActivity(intent);
+                finish();
+            }
+            else{
+                Toast.makeText(getBaseContext(),"Login Unsucessful",Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

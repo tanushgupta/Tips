@@ -34,7 +34,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public OrderAdapter() {
         myHandler = new Handler();
         tipList = new ArrayList<>();
-        tipsFirebaseRef = FirebaseDatabase.getInstance().getReference("User/ClosedOrders");
+        tipsFirebaseRef = FirebaseDatabase.getInstance().getReference("User/ClosedOrders");//Users/himanshu/orders");
 //        handler.postDelayed(new SimpleTread(),30L);
 
         tipsFirebaseRef.addValueEventListener(new ValueEventListener() {
@@ -43,13 +43,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 firebaseUpdateWorking = true;
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                Log.i("", "**************** SnapShot" + dataSnapshot.toString());
-
+                Log.i("", "**************** OrdersSnapShot" + dataSnapshot.getValue().toString());
                 Object dtata = dataSnapshot.getValue();
                 ArrayList<HashMap<String, HashMap<String, Object>>> value1 = (ArrayList<HashMap<String, HashMap<String, Object>>>) dataSnapshot.getValue();
+                //ArrayList<HashMap<String, Object>> value1 = (ArrayList<HashMap<String, Object>>) dataSnapshot.getValue();
                 if (value1 != null) {
                     tipList = new ArrayList<OrderBean>();
-
                     for (HashMap<?, ?> val : value1) {
                         if (val != null) {
                             OrderBean tipbean = new OrderBean();

@@ -35,7 +35,6 @@ public class TipRow extends AppCompatActivity {
         send_ordr_Execute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
 

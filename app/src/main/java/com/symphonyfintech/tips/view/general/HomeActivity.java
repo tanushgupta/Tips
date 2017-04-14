@@ -1,8 +1,10 @@
 package com.symphonyfintech.tips.view.general;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,10 +14,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,9 +36,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends Fragment {
 
     DatabaseReference openOrderFirebaseRef;
+
+    private View view;
 
     public static Map<Long ,Double> marketData = new HashMap<>();
     public static ArrayList<TipBean> tipsAdaptorVal = new ArrayList<>();
@@ -42,17 +48,29 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
     Intent advisor_intent;
     static boolean isPersistenceEnabled =false;
 
+    @Nullable
     @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.content_home, container, false);
+        if(isPersistenceEnabled=false) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            isPersistenceEnabled=true;
+        }
+        new Thread(new simpleDataFech("")).start();
+        initViews();
+        return view;
+    }
+
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.home);
-
+        setContentView(R.layout.content_home);
         if(isPersistenceEnabled=false) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             isPersistenceEnabled=true;
         }
 
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //       FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -64,6 +82,7 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
         new Thread(new simpleDataFech("")).start();
         initViews();
@@ -78,20 +97,20 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         } else {
             super.onBackPressed();
         }
-    }
+    }*/
 
     RecyclerView.Adapter adapter;
     private void initViews(){
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.tipRecycle);
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.tipRecycle);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
          adapter = new TipAdapter();
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-        GestureDetector gestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
+        GestureDetector gestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
                 @Override public boolean onSingleTapUp(MotionEvent e) {
                     return true;
                 }
@@ -116,6 +135,7 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         });
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -142,12 +162,6 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         switch(id){
-            /*case R.id.nav_tips:
-                advisor_intent = new Intent(getBaseContext(), HomeActivity.class);
-                advisor_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                startActivity(advisor_intent);
-                break;
-            */
             case R.id.nav_advisors:
                 advisor_intent = new Intent(getBaseContext(), AdvisorList.class);
                 advisor_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
@@ -166,7 +180,7 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
+    }*/
     public static  ZMQ.Context ctx = ZMQ.context(1);
     private class LongOperation extends AsyncTask<String, Void, String> {
          boolean data=true;

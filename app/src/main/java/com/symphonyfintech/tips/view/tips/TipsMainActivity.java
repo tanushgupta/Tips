@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.tips.Tip;
 import com.symphonyfintech.tips.view.advisors.AdvisersFragment;
+import com.symphonyfintech.tips.view.advisors.AdvisorList;
+import com.symphonyfintech.tips.view.general.HomeActivity;
 import com.symphonyfintech.tips.view.orders.OrdersFragment;
 
 /**
@@ -28,6 +30,8 @@ public class TipsMainActivity extends AppCompatActivity {
     private TipsFragment tipsfragment;
     private OrdersFragment ordfragment;
     private AdvisersFragment advfragment;
+    private HomeActivity homeActivity;
+    private AdvisorList advisorList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,15 +52,17 @@ public class TipsMainActivity extends AppCompatActivity {
         ordfragment = new OrdersFragment();
         tipsfragment = new TipsFragment();
         tipDetailFragment = new TipDetailFragment();
+        homeActivity = new HomeActivity();
+        advisorList = new AdvisorList();
 
         //android.app.FragmentManager fragmentManager = getFragmentManager();
         getFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_layout,tipsfragment)
+                .add(R.id.fragment_layout,homeActivity)
                 .commit();
         getFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_layout,advfragment)
+                .add(R.id.fragment_layout,advisorList)
                 .commit();
         getFragmentManager()
                 .beginTransaction()
@@ -122,33 +128,33 @@ public class TipsMainActivity extends AppCompatActivity {
         switch(fragment){
             case "TipsFragment":
                 getFragmentManager().beginTransaction().hide(tipDetailFragment).commit();
-                getFragmentManager().beginTransaction().hide(advfragment).commit();
+                getFragmentManager().beginTransaction().hide(advisorList).commit();
                 getFragmentManager().beginTransaction().hide(ordfragment).commit();
-                getFragmentManager().beginTransaction().show(tipsfragment).commit();
+                getFragmentManager().beginTransaction().show(homeActivity).commit();
                 break;
             case "OrderFragment":
                 getFragmentManager().beginTransaction().hide(tipDetailFragment).commit();
-                getFragmentManager().beginTransaction().hide(advfragment).commit();
+                getFragmentManager().beginTransaction().hide(advisorList).commit();
                 getFragmentManager().beginTransaction().show(ordfragment).commit();
-                getFragmentManager().beginTransaction().hide(tipsfragment).commit();
+                getFragmentManager().beginTransaction().hide(homeActivity).commit();
                 break;
             case "AdviserFragment":
                 getFragmentManager().beginTransaction().hide(tipDetailFragment).commit();
-                getFragmentManager().beginTransaction().show(advfragment).commit();
+                getFragmentManager().beginTransaction().show(advisorList).commit();
                 getFragmentManager().beginTransaction().hide(ordfragment).commit();
-                getFragmentManager().beginTransaction().hide(tipsfragment).commit();
+                getFragmentManager().beginTransaction().hide(homeActivity).commit();
                 break;
             case "TipDetailFragment":
                 getFragmentManager().beginTransaction().show(tipDetailFragment).commit();
-                getFragmentManager().beginTransaction().hide(advfragment).commit();
+                getFragmentManager().beginTransaction().hide(advisorList).commit();
                 getFragmentManager().beginTransaction().hide(ordfragment).commit();
-                getFragmentManager().beginTransaction().hide(tipsfragment).commit();
+                getFragmentManager().beginTransaction().hide(homeActivity).commit();
                 break;
             default:
                 getFragmentManager().beginTransaction().hide(tipDetailFragment).commit();
-                getFragmentManager().beginTransaction().hide(advfragment).commit();
+                getFragmentManager().beginTransaction().hide(advisorList).commit();
                 getFragmentManager().beginTransaction().hide(ordfragment).commit();
-                getFragmentManager().beginTransaction().show(tipsfragment).commit();
+                getFragmentManager().beginTransaction().show(homeActivity).commit();
                 break;
         }
     }

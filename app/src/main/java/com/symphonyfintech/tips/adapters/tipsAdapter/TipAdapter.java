@@ -31,7 +31,7 @@ import java.util.TimerTask;
 
 public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
     DatabaseReference tipsFirebaseRef;
-   public static TipBean delectedTip;
+    public static TipBean delectedTip;
     boolean firebaseUpdateWorking=false;
     private List<TipBean> tipList ;
     final Handler myHandler;
@@ -211,7 +211,7 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
             }
         });
     }
-     else{
+    else{
         viewHolder.analyst_name.setText( tipList.get(i).AnalystName );
     }
     }

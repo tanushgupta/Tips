@@ -76,7 +76,6 @@ public class Advisor extends AppCompatActivity {
 
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
             }
         });
     }
@@ -95,5 +94,4 @@ public class Advisor extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
-
 }

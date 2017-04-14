@@ -10,8 +10,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".view.general.HomeActivity"
-    tools:showIn="@layout/app_bar_home">
+    tools:context=".view.general.HomeActivity">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
