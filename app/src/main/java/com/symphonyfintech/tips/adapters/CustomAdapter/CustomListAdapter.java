@@ -49,7 +49,7 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
             order_side = (TextView) itemView.findViewById(R.id.txt_tip_side);
             tip_type = (TextView) itemView.findViewById(R.id.txt_status_tip);
             tip_live = (TextView) itemView.findViewById(R.id.txt_live);
-            tip_target = (TextView) itemView.findViewById(R.id.txt_target);
+            tip_target = (TextView) itemView.findViewById(R.id.txt_target_Price);
             tip_stploss = (TextView) itemView.findViewById(R.id.txt_stplss);
             tip_adv = (TextView) itemView.findViewById(R.id.txt_post_adv);
         }
@@ -91,7 +91,7 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
             public void onClick(View v) {
                 //fragmentJump(tip);
                 //new DialogTipDetail(mContext,tip);
-                ((TipsMainActivity) mContext).openDetailTipFragment(tip);
+                ((TipsMainActivity) mContext).openDetailTipFragment();
             }
         });
         // Set item views based on your views and data model

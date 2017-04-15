@@ -17,7 +17,11 @@ import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.CustomAdapter.ImageLoadTask;
 import com.symphonyfintech.tips.adapters.advisorAdapter.AdvisorAdapter;
 import com.symphonyfintech.tips.adapters.advisorAdapter.AdvisorTipsAdapter;
+import com.symphonyfintech.tips.adapters.tipsAdapter.BaseRecyclerViewAdapter;
 import com.symphonyfintech.tips.model.advisor.AdvisorBean;
+import com.symphonyfintech.tips.model.tips.TipList;
+
+import java.util.ArrayList;
 
 public class Advisor extends AppCompatActivity {
     AdvisorBean selected ;
@@ -43,14 +47,14 @@ public class Advisor extends AppCompatActivity {
         initViews();
     }
     RecyclerView.Adapter adapter;
-
     private void initViews(){
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.tipsbyUser);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new AdvisorTipsAdapter(selected.userId);
+        //adapter = new AdvisorTipsAdapter(selected.userId);
+        //recyclerView.setAdapter(adapter);
+        adapter = new BaseRecyclerViewAdapter(new ArrayList<TipList>(),selected.userId,1,getApplication());
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {

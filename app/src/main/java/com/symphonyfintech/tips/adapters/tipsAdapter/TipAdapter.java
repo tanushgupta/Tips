@@ -18,48 +18,56 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.symphonyfintech.tips.R;
+import com.symphonyfintech.tips.model.tips.HeaderItem;
 import com.symphonyfintech.tips.model.tips.TipBean;
+import com.symphonyfintech.tips.model.tips.TipList;
 import com.symphonyfintech.tips.view.general.HomeActivity;
 import com.symphonyfintech.tips.view.general.ScrollingActivity;
 import com.symphonyfintech.tips.view.tips.TipRow;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
+
     DatabaseReference tipsFirebaseRef;
     public static TipBean delectedTip;
     boolean firebaseUpdateWorking=false;
     private List<TipBean> tipList ;
+    private List<TipList> tipListall;
     final Handler myHandler;
+
     public TipAdapter() {
         myHandler = new Handler();
         tipList = new ArrayList<>();
+        tipListall = new ArrayList<TipList>();
+        HeaderItem header = new HeaderItem("Today's List");
+        tipListall.add(header);
         tipsFirebaseRef = FirebaseDatabase.getInstance().getReference("Tips/");
 //        handler.postDelayed(new SimpleTread(),30L);
 
         tipsFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                firebaseUpdateWorking=true;
+                firebaseUpdateWorking = true;
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 Log.i("", "**************** SnapShot" + dataSnapshot.toString());
-
-
-                Object dtata =  dataSnapshot.getValue();
+                Object dtata = dataSnapshot.getValue();
                 HashMap<String, HashMap<String, Object>> value1 =
                         (HashMap<String, HashMap<String, Object>>) dataSnapshot.getValue();
-                        if(value1!=null){
-                            tipList = new ArrayList<TipBean>();
-                        }
+                if (value1 != null) {
+                    tipList = new ArrayList<TipBean>();
+                }
                 for (HashMap.Entry<?, ?> entry2 : value1.entrySet()) {
                     //print keys and values
                     TipBean tipbean = new TipBean();
-                    for (HashMap.Entry<?, ?> entry :( (HashMap<String,Object>)entry2.getValue()).entrySet()) {
+                    for (HashMap.Entry<?, ?> entry : ((HashMap<String, Object>) entry2.getValue()).entrySet()) {
 //                        System.out.println("**********\t " + entry.getKey() + " : " + entry.getValue());
                         if (entry.getKey().equals("stopLoss"))
                             tipbean.stopLoss = entry.getValue().toString();
@@ -92,14 +100,21 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
                     }
 //                    System.out.println(" \n\n\n new Entry ");
                     tipbean.fetchDataForThisTip();
-                    tipList.add(tipbean);
-                }
-                notifyItemInserted(tipList.size()==0 ? 0 : tipList.size()-1);
-                notifyDataSetChanged();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    String tipByDates = "";
+                    String todaysDate = sdf.format(new Date());
+                    if (tipbean.tipCreatedAtTime.contains(" ")) {
+                        tipByDates = tipbean.tipCreatedAtTime.substring(0, tipbean.tipCreatedAtTime.indexOf(" "));
+                        Log.i("TipDate: ", "****************************************** " + tipByDates);
+                        Log.i("Todays date: ", "****************************************** " + todaysDate);
+                        tipList.add(tipbean);
+                    }
+                    notifyItemInserted(tipList.size() == 0 ? 0 : tipList.size() - 1);
+                    notifyDataSetChanged();
 //                Collections.sort(tipList);
-                firebaseUpdateWorking=false;
+                    firebaseUpdateWorking = false;
+                }
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
@@ -118,109 +133,108 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
         viewHolder.txt_Symbol.setText(tipList.get(i).symbol);
-
         viewHolder.txt_Symbol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delectedTip=tipList.get(i);
+                delectedTip = tipList.get(i);
 
                 Intent intent = new Intent(v.getContext(), ScrollingActivity.class);
                 v.getContext().startActivity(intent);
             }
         });
-        viewHolder.txt_price.setText("₹"+tipList.get(i).price);
+        viewHolder.txt_price.setText("₹" + tipList.get(i).price);
         viewHolder.txt_price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delectedTip=tipList.get(i);
+                delectedTip = tipList.get(i);
 
                 Intent intent = new Intent(v.getContext(), ScrollingActivity.class);
                 v.getContext().startActivity(intent);
             }
         });
-        viewHolder.txt_side_at.setText(tipList.get(i).side+" At ");
+        viewHolder.txt_side_at.setText(tipList.get(i).side + " At ");
         viewHolder.txt_side_at.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delectedTip=tipList.get(i);
+                delectedTip = tipList.get(i);
 
                 Intent intent = new Intent(v.getContext(), ScrollingActivity.class);
                 v.getContext().startActivity(intent);
             }
         });
-        viewHolder.txt_target_Price.setText("₹"+tipList.get(i).targetPrice);
+        viewHolder.txt_target_Price.setText("₹" + tipList.get(i).targetPrice);
         viewHolder.txt_target_Price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delectedTip=tipList.get(i);
+                delectedTip = tipList.get(i);
 
                 Intent intent = new Intent(v.getContext(), ScrollingActivity.class);
                 v.getContext().startActivity(intent);
             }
         });
-        String priceVal1 = viewHolder.txt_live_price.getText().toString().replace("Rs.","").replace("₹","").trim();
-        String priceVal2 = tipList.get(i).livePrice == null ? null:tipList.get(i).livePrice+"";
-       try {
-           if (priceVal1 != null && priceVal2 != null && !priceVal2.equals("null")) {
-               if (Double.parseDouble(priceVal2) < Double.parseDouble(priceVal1)) {
-                   viewHolder.txt_live_price.setTextColor(Color.RED);
-               } else if (Double.parseDouble(priceVal2) > Double.parseDouble(priceVal1)) {
-                   viewHolder.txt_live_price.setTextColor(Color.rgb(0,100,0));
-               }
-           }
-       }catch (Exception e){}
-        viewHolder.txt_live_price.setText("₹"+tipList.get(i).livePrice);
+        String priceVal1 = viewHolder.txt_live_price.getText().toString().replace("Rs.", "").replace("₹", "").trim();
+        String priceVal2 = tipList.get(i).livePrice == null ? null : tipList.get(i).livePrice + "";
+        try {
+            if (priceVal1 != null && priceVal2 != null && !priceVal2.equals("null")) {
+                if (Double.parseDouble(priceVal2) < Double.parseDouble(priceVal1)) {
+                    viewHolder.txt_live_price.setTextColor(Color.RED);
+                } else if (Double.parseDouble(priceVal2) > Double.parseDouble(priceVal1)) {
+                    viewHolder.txt_live_price.setTextColor(Color.rgb(0, 100, 0));
+                }
+            }
+        } catch (Exception e) {
+        }
+        viewHolder.txt_live_price.setText("₹" + tipList.get(i).livePrice);
         viewHolder.txt_live_price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delectedTip=tipList.get(i);
+                delectedTip = tipList.get(i);
 
                 Intent intent = new Intent(v.getContext(), ScrollingActivity.class);
                 v.getContext().startActivity(intent);
             }
         });
 
-        if(viewHolder.txt_live_price.getText().toString().contains("null")){
+        if (viewHolder.txt_live_price.getText().toString().contains("null")) {
             viewHolder.txt_live_price.setText("NA");
         }
-        viewHolder.txt_stopLoss.setText("₹"+tipList.get(i).stopLoss);
+        viewHolder.txt_stopLoss.setText("₹" + tipList.get(i).stopLoss);
         viewHolder.btn_exe_tip.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        delectedTip=tipList.get(i);
-                        Intent intent = new Intent(v.getContext(), TipRow.class);
-                        v.getContext().startActivity(intent);
-
-                    }
-                });
-    if(tipList.get(i).AnalystName == null) {
-        DatabaseReference advisor = FirebaseDatabase.getInstance().getReference("Analyst/" + tipList.get(i).tipSenderID + "/name");
-//        handler.postDelayed(new SimpleTread(),30L);
-
-        advisor.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String advisorName = (String) dataSnapshot.getValue();
-                viewHolder.analyst_name.setText(advisorName);
-                tipList.get(i).AnalystName = advisorName;
-            }
+            public void onClick(View v) {
+                delectedTip = tipList.get(i);
+                Intent intent = new Intent(v.getContext(), TipRow.class);
+                v.getContext().startActivity(intent);
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("DATA", "Failed to read value.", error.toException());
             }
         });
-    }
-    else{
-        viewHolder.analyst_name.setText( tipList.get(i).AnalystName );
-    }
+        if (tipList.get(i).AnalystName == null) {
+            DatabaseReference advisor = FirebaseDatabase.getInstance().getReference("Analyst/" + tipList.get(i).tipSenderID + "/name");
+//        handler.postDelayed(new SimpleTread(),30L);
+
+            advisor.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String advisorName = (String) dataSnapshot.getValue();
+                    viewHolder.analyst_name.setText(advisorName);
+                    tipList.get(i).AnalystName = advisorName;
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    Log.w("DATA", "Failed to read value.", error.toException());
+                }
+            });
+        } else {
+            viewHolder.analyst_name.setText(tipList.get(i).AnalystName);
+        }
     }
  
     @Override
     public int getItemCount() {
         return tipList.size();
     }
- 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_Symbol,txt_price,txt_side_at,txt_target_Price,txt_live_price,txt_stopLoss,analyst_name;
         Button btn_exe_tip;
@@ -235,7 +249,9 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
             btn_exe_tip = (Button) view.findViewById(R.id.btn_exe_tip);
             analyst_name= (TextView)view.findViewById(R.id.analyst_name);        }
     }
+
    public Timer timer ;
+
     protected  void startTimer() {
          timer = new Timer("MyTimer");
             timer.scheduleAtFixedRate(new TimerTask() {

@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.tips.Tip;
+import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.view.advisors.AdvisersFragment;
 import com.symphonyfintech.tips.view.advisors.AdvisorList;
 import com.symphonyfintech.tips.view.general.HomeActivity;
@@ -26,10 +27,8 @@ public class TipsMainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frag_layout;
-    private TipDetailFragment tipDetailFragment;
-    private TipsFragment tipsfragment;
+    private TipRow tipDetailFragment;
     private OrdersFragment ordfragment;
-    private AdvisersFragment advfragment;
     private HomeActivity homeActivity;
     private AdvisorList advisorList;
 
@@ -48,10 +47,7 @@ public class TipsMainActivity extends AppCompatActivity {
             return;
         }
 
-        advfragment = new AdvisersFragment();
         ordfragment = new OrdersFragment();
-        tipsfragment = new TipsFragment();
-        tipDetailFragment = new TipDetailFragment();
         homeActivity = new HomeActivity();
         advisorList = new AdvisorList();
 
@@ -67,10 +63,6 @@ public class TipsMainActivity extends AppCompatActivity {
         getFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_layout,ordfragment)
-                .commit();
-        getFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragment_layout,tipDetailFragment)
                 .commit();
         showhideFragments("TipsFragment");
 
@@ -119,27 +111,28 @@ public class TipsMainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void openDetailTipFragment(Tip tip){
-        tipDetailFragment.setUI(tip);
+    public void openDetailTipFragment(){
+        tipDetailFragment = new TipRow();
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_layout,tipDetailFragment)
+                .commit();
         showhideFragments("TipDetailFragment");
     }
 
     private void showhideFragments(String fragment){
         switch(fragment){
             case "TipsFragment":
-                getFragmentManager().beginTransaction().hide(tipDetailFragment).commit();
                 getFragmentManager().beginTransaction().hide(advisorList).commit();
                 getFragmentManager().beginTransaction().hide(ordfragment).commit();
                 getFragmentManager().beginTransaction().show(homeActivity).commit();
                 break;
             case "OrderFragment":
-                getFragmentManager().beginTransaction().hide(tipDetailFragment).commit();
                 getFragmentManager().beginTransaction().hide(advisorList).commit();
                 getFragmentManager().beginTransaction().show(ordfragment).commit();
                 getFragmentManager().beginTransaction().hide(homeActivity).commit();
                 break;
             case "AdviserFragment":
-                getFragmentManager().beginTransaction().hide(tipDetailFragment).commit();
                 getFragmentManager().beginTransaction().show(advisorList).commit();
                 getFragmentManager().beginTransaction().hide(ordfragment).commit();
                 getFragmentManager().beginTransaction().hide(homeActivity).commit();

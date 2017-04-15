@@ -115,7 +115,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_tip, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_list_items, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -184,7 +184,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
             }
         });
         viewHolder.txt_stopLoss.setText(tipList.get(i).stopLoss.equalsIgnoreCase("null") ?"NA":tipList.get(i).stopLoss+ "₹");
-        viewHolder.btn_exe_tip.setOnClickListener(new View.OnClickListener() {
+        /*viewHolder.btn_exe_tip.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         delectedTip=tipList.get(i);
@@ -192,7 +192,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
                         v.getContext().startActivity(intent);
 
                     }
-                });
+                });*/
         DatabaseReference advisor = FirebaseDatabase.getInstance().getReference("Users/"+tipList.get(i).tipSenderID);
 //        handler.postDelayed(new SimpleTread(),30L);
 
@@ -218,7 +218,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
  
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_Symbol,txt_price,txt_side_at,txt_target_Price,txt_live_price,txt_stopLoss;
-        Button btn_exe_tip;
+        //Button btn_exe_tip;
         public ViewHolder(View view) {
             super(view);
             txt_Symbol = (TextView)view.findViewById(R.id.txt_Symbol);
@@ -227,7 +227,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
             txt_target_Price = (TextView)view.findViewById(R.id.txt_target_Price);
             txt_live_price= (TextView)view.findViewById(R.id.txt_live_price);
             txt_stopLoss = (TextView)view.findViewById(R.id.txt_stopLoss);
-            btn_exe_tip = (Button) view.findViewById(R.id.btn_exe_tip);
+            //btn_exe_tip = (Button) view.findViewById(R.id.btn_exe_tip);
         }
     }
    public Timer timer ;

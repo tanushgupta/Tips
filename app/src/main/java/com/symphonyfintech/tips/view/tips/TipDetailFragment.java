@@ -35,7 +35,7 @@ public class TipDetailFragment extends Fragment {
         ((TextView) mView.findViewById(R.id.txt_tip_side)).setText(tip.getSide());
         ((TextView) mView.findViewById(R.id.txt_status_tip)).setText("ACTIVE");
         ((TextView) mView.findViewById(R.id.txt_live)).setText(tip.getPrice());
-        ((TextView) mView.findViewById(R.id.txt_target)).setText(tip.getTargetPrice());
+        ((TextView) mView.findViewById(R.id.txt_target_Price)).setText(tip.getTargetPrice());
         ((TextView) mView.findViewById(R.id.txt_stplss)).setText(tip.getStopLoss());
         ((TextView) mView.findViewById(R.id.txt_tip_description)).setText(tip.getDescription());
         GraphView graph = (GraphView) mView.findViewById(R.id.graph);

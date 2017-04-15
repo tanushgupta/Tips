@@ -25,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.dataAdapter.simpleDataFech;
+import com.symphonyfintech.tips.adapters.tipsAdapter.BaseRecyclerViewAdapter;
+import com.symphonyfintech.tips.model.tips.TipList;
 import com.symphonyfintech.tips.view.orders.Orders;
 import com.symphonyfintech.tips.adapters.tipsAdapter.TipAdapter;
 import com.symphonyfintech.tips.model.tips.TipBean;
@@ -106,7 +108,8 @@ public class HomeActivity extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-         adapter = new TipAdapter();
+        //adapter = new TipAdapter();
+        adapter = new BaseRecyclerViewAdapter(new ArrayList<TipList>(),"",0,getActivity());
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
