@@ -44,7 +44,6 @@ public class HomeActivity extends Fragment {
 
     private View view;
 
-    public static Map<Long ,Double> marketData = new HashMap<>();
     public static ArrayList<TipBean> tipsAdaptorVal = new ArrayList<>();
 
     Intent advisor_intent;
@@ -58,7 +57,6 @@ public class HomeActivity extends Fragment {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             isPersistenceEnabled=true;
         }
-        new Thread(new simpleDataFech("")).start();
         initViews();
         return view;
     }
@@ -184,7 +182,6 @@ public class HomeActivity extends Fragment {
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }*/
-    public static  ZMQ.Context ctx = ZMQ.context(1);
     private class LongOperation extends AsyncTask<String, Void, String> {
          boolean data=true;
         @Override

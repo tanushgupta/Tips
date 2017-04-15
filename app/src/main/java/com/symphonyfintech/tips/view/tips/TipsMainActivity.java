@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.symphonyfintech.tips.R;
+import com.symphonyfintech.tips.adapters.dataAdapter.simpleDataFech;
 import com.symphonyfintech.tips.model.tips.Tip;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.view.advisors.AdvisersFragment;
@@ -19,12 +20,19 @@ import com.symphonyfintech.tips.view.advisors.AdvisorList;
 import com.symphonyfintech.tips.view.general.HomeActivity;
 import com.symphonyfintech.tips.view.orders.OrdersFragment;
 
+import org.zeromq.ZMQ;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Tanush on 3/29/2017.
  */
 
 public class TipsMainActivity extends AppCompatActivity {
 
+    public static Map<Long ,Double> marketData = new HashMap<>();
+    public static  ZMQ.Context ctx = ZMQ.context(1);
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frag_layout;
     private TipRow tipDetailFragment;
@@ -94,6 +102,8 @@ public class TipsMainActivity extends AppCompatActivity {
                 Log.d("EmailID: ", email);
             }
         }
+
+        new Thread(new simpleDataFech("")).start();
     }
 
     @Override

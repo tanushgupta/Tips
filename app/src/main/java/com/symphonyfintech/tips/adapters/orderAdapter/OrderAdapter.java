@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.order.OrderBean;
 import com.symphonyfintech.tips.view.general.HomeActivity;
+import com.symphonyfintech.tips.view.tips.TipsMainActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -159,8 +160,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
                     for(OrderBean order :tipList){
                         Long key= Long.parseLong(order.instrumentID);
-                        if(HomeActivity.marketData.containsKey(key)){
-                            order.livePrice =  (HomeActivity.marketData.get(key)/100)+"";
+                        if(TipsMainActivity.marketData.containsKey(key)){
+                            order.livePrice =  (TipsMainActivity.marketData.get(key)/100)+"";
                             createThread();
                         }
                     }

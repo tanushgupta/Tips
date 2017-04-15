@@ -172,8 +172,9 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     if(tiptype.getType() == TipList.TYPE_EVENT){
                         TipBean tip = ((TipItem)tiptype).getTip();
                         Long key= Long.parseLong(tip.instrumentID);
-                        if(HomeActivity.marketData.containsKey(key)){
-                            tip.livePrice =  HomeActivity.marketData.get(key)/100;
+                        Log.i("Live Price: ","===================================== "+ TipsMainActivity.marketData.get(key) + "===============================");
+                        if(TipsMainActivity.marketData.containsKey(key)){
+                            tip.livePrice =  TipsMainActivity.marketData.get(key)/100;
                             createThread();
                         }
                     }
@@ -232,7 +233,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     viewHolder.analyst_name.setText(advisorName);
                     //tip.AnalystName = advisorName;
                 }
-
                 @Override
                 public void onCancelled(DatabaseError error) {
                     Log.w("DATA", "Failed to read value.", error.toException());
@@ -254,6 +254,13 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 Object dtata = dataSnapshot.getValue();
                 HashMap<String, HashMap<String, Object>> value1 =
                         (HashMap<String, HashMap<String, Object>>) dataSnapshot.getValue();
+
+                if(items.size()>0 && value1 != null){
+                    items.clear();
+                    monthly = false;
+                    today = false;
+                    notifyDataSetChanged();
+                }
 
                 for (HashMap.Entry<?, ?> entry2 : value1.entrySet()) {
                     //print keys and values
@@ -302,7 +309,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     //items.add(item);
                     //notifyItemInserted(items.size() == 0 ? 0 : items.size() - 1);
                     //notifyDataSetChanged();
-//                Collections.sort(tipList);
+                    //Collections.sort(tipList);
                     firebaseUpdateWorking = false;
                 }
             }
@@ -329,15 +336,16 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 items.add(new HeaderItem("Today's Tips"));
                 today = true;
             }
-            items.add(new TipItem(tip));
         }
         else{
             if(!monthly){
                 items.add(new HeaderItem("This Month"));
                 monthly = true;
             }
-            items.add(new TipItem(tip));
         }
-        notifyDataSetChanged();
+        items.add(new TipItem(tip));
+
+        notifyItemInserted(items.size() - 1);
+        //notifyDataSetChanged();
     }
 }

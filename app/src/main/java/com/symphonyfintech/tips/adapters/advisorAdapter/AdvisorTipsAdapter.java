@@ -22,6 +22,7 @@ import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.view.general.HomeActivity;
 import com.symphonyfintech.tips.view.general.ScrollingActivity;
 import com.symphonyfintech.tips.view.tips.TipRow;
+import com.symphonyfintech.tips.view.tips.TipsMainActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -242,8 +243,8 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
 
                     for(TipBean tip :tipList){
                         Long key= Long.parseLong(tip.instrumentID);
-                        if(HomeActivity.marketData.containsKey(key)){
-                            tip.livePrice =  HomeActivity.marketData.get(key)/100;
+                        if(TipsMainActivity.marketData.containsKey(key)){
+                            tip.livePrice =  TipsMainActivity.marketData.get(key)/100;
     //                        mHandler.obtainMessage(1).sendToTarget();
                             createThread();
                         }

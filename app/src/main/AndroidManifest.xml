@@ -15,7 +15,8 @@
         <activity
             android:name=".view.general.WelcomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,28 +24,19 @@
         </activity>
         <activity android:name=".view.general.SignUpActivity">
         </activity>
-        <activity android:name=".view.tips.TipsMainActivity">
+        <activity android:name=".view.tips.TipsMainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity android:name=".view.general.ScrollingActivity"></activity>
-        <activity android:name=".view.tips.TipRow"></activity>
         <activity
             android:name=".view.advisors.Advisor"
-            android:parentActivityName=".view.advisors.AdvisorList">
-        </activity>
-        <activity
-            android:name=".view.advisors.AdvisorList"
-            android:parentActivityName=".view.general.HomeActivity">
+            android:parentActivityName=".view.tips.TipsMainActivity">
         </activity>
         <activity android:name=".view.advisors.advisor_row"></activity>
         <activity
-            android:name=".view.general.HomeActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".view.orders.Orders"
             android:label="@string/label_orders"
-            android:parentActivityName=".view.general.HomeActivity">
+            android:parentActivityName=".view.tips.TipsMainActivity">
         </activity>
     </application>
 
