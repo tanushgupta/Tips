@@ -9,13 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import android.widget.Toast;
+
 import com.symphonyfintech.tips.R;
+import com.symphonyfintech.tips.adapters.FirebaseConnector.OrdersSingleton;
 import com.symphonyfintech.tips.adapters.dataAdapter.simpleDataFech;
-import com.symphonyfintech.tips.model.tips.Tip;
 import com.symphonyfintech.tips.model.tips.TipBean;
-import com.symphonyfintech.tips.view.advisors.AdvisersFragment;
+import com.symphonyfintech.tips.model.user.User;
 import com.symphonyfintech.tips.view.advisors.AdvisorList;
 import com.symphonyfintech.tips.view.general.HomeActivity;
 import com.symphonyfintech.tips.view.orders.OrdersFragment;
@@ -33,17 +33,27 @@ public class TipsMainActivity extends AppCompatActivity {
 
     public static Map<Long ,Double> marketData = new HashMap<>();
     public static  ZMQ.Context ctx = ZMQ.context(1);
+    //public static OrdersSingleton mainObjFire;
+    private User userdetails;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frag_layout;
-    private TipRow tipDetailFragment;
+    private TipDetailFragment tipDetailFragment;
     private OrdersFragment ordfragment;
     private HomeActivity homeActivity;
     private AdvisorList advisorList;
+    private TipRow executeTip;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tips);
+
+        //Get User Details
+        userdetails =(User) getIntent().getSerializableExtra("User");
+        Log.i("User Access Token: ", "****************** "+ userdetails.getAcessToken() + "************************");
+
+        //OrdersSingleton Initialization
+        //mainObjFire = mainObjFire.getInstance(userdetails.getUserName());
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);// in on Create()
@@ -54,7 +64,8 @@ public class TipsMainActivity extends AppCompatActivity {
         if(savedInstanceState != null){
             return;
         }
-
+        executeTip = new TipRow();
+        tipDetailFragment = new TipDetailFragment();
         ordfragment = new OrdersFragment();
         homeActivity = new HomeActivity();
         advisorList = new AdvisorList();
@@ -72,6 +83,14 @@ public class TipsMainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .add(R.id.fragment_layout,ordfragment)
                 .commit();
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_layout,tipDetailFragment)
+                .commit();
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_layout,executeTip)
+                .commit();
         showhideFragments("TipsFragment");
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -83,7 +102,12 @@ public class TipsMainActivity extends AppCompatActivity {
                                 showhideFragments("TipsFragment");
                                 break;
                             case R.id.menu_item_order:
-                                showhideFragments("OrderFragment");
+                                if(userdetails.userType == User.AUTH_USER){
+                                    showhideFragments("OrderFragment");
+                                }
+                                else{
+                                    Toast.makeText(getBaseContext(),"Please Log In to see your Orders",Toast.LENGTH_SHORT).show();
+                                }
                                 break;
                             case R.id.menu_item_advisor:
                                 showhideFragments("AdviserFragment");
@@ -93,7 +117,7 @@ public class TipsMainActivity extends AppCompatActivity {
                     }
                 });
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        /*FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String email = user.getEmail();
             String uid = user.getUid();
@@ -101,7 +125,7 @@ public class TipsMainActivity extends AppCompatActivity {
             if(email != null){
                 Log.d("EmailID: ", email);
             }
-        }
+        }*/
 
         new Thread(new simpleDataFech("")).start();
     }
@@ -121,44 +145,46 @@ public class TipsMainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void openDetailTipFragment(){
-        tipDetailFragment = new TipRow();
-        getFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragment_layout,tipDetailFragment)
-                .commit();
+    public void openDetailTipFragment(TipBean tip){
+        tipDetailFragment.setUI(tip);
         showhideFragments("TipDetailFragment");
     }
 
+    public void openExecuteTipFragment(TipBean tip){
+        executeTip.setUI(tip);
+        showhideFragments("ExecuteTip");
+    }
+
     private void showhideFragments(String fragment){
+        getFragmentManager().beginTransaction().hide(advisorList).commit();
+        getFragmentManager().beginTransaction().hide(ordfragment).commit();
+        getFragmentManager().beginTransaction().hide(homeActivity).commit();
+        getFragmentManager().beginTransaction().hide(ordfragment).commit();
+        getFragmentManager().beginTransaction().hide(tipDetailFragment).commit();
+        getFragmentManager().beginTransaction().hide(executeTip).commit();
         switch(fragment){
             case "TipsFragment":
-                getFragmentManager().beginTransaction().hide(advisorList).commit();
-                getFragmentManager().beginTransaction().hide(ordfragment).commit();
                 getFragmentManager().beginTransaction().show(homeActivity).commit();
                 break;
             case "OrderFragment":
-                getFragmentManager().beginTransaction().hide(advisorList).commit();
                 getFragmentManager().beginTransaction().show(ordfragment).commit();
-                getFragmentManager().beginTransaction().hide(homeActivity).commit();
                 break;
             case "AdviserFragment":
                 getFragmentManager().beginTransaction().show(advisorList).commit();
-                getFragmentManager().beginTransaction().hide(ordfragment).commit();
-                getFragmentManager().beginTransaction().hide(homeActivity).commit();
                 break;
             case "TipDetailFragment":
                 getFragmentManager().beginTransaction().show(tipDetailFragment).commit();
-                getFragmentManager().beginTransaction().hide(advisorList).commit();
-                getFragmentManager().beginTransaction().hide(ordfragment).commit();
-                getFragmentManager().beginTransaction().hide(homeActivity).commit();
+                break;
+            case "ExecuteTip":
+                getFragmentManager().beginTransaction().show(executeTip).commit();
                 break;
             default:
-                getFragmentManager().beginTransaction().hide(tipDetailFragment).commit();
-                getFragmentManager().beginTransaction().hide(advisorList).commit();
-                getFragmentManager().beginTransaction().hide(ordfragment).commit();
                 getFragmentManager().beginTransaction().show(homeActivity).commit();
                 break;
         }
+    }
+
+    public User getUser(){
+        return userdetails;
     }
 }

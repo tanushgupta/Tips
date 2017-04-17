@@ -47,9 +47,22 @@ public class TipBean implements Comparable<TipBean> {
     public String description;
     public String executed;
 
-    public TipBean(String tipId, String tipSenderID, String symbol, String price, String instrumentID, String orderQuantity,
-                   String productType, String triggerPrice, String side, String targetPrice, String stopLoss,
-                   String tipCreatedAtTime, String tipExpiry, String description) {
+    public TipBean(
+            String tipId,
+            String tipSenderID,
+            String symbol,
+            String price,
+            String instrumentID,
+            String orderQuantity,
+            String productType,
+            String triggerPrice,
+            String side,
+            String targetPrice,
+            String stopLoss,
+            String tipCreatedAtTime,
+            String tipExpiry,
+            String description
+    ) {
         this.tipId = tipId;
         this.tipSenderID = tipSenderID;
         this.symbol = symbol;

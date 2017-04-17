@@ -71,6 +71,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         myHandler = new Handler();
         tipsFirebaseRef = FirebaseDatabase.getInstance().getReference("Tips/");
         getListofTipsfromFirebase();
+        startTimer();
     }
 
     private static class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -138,7 +139,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(mContext,"Working on the execute page.",Toast.LENGTH_SHORT).show();
-                        //((TipsMainActivity) mContext).openDetailTipFragment();
+                        ((TipsMainActivity) mContext).openDetailTipFragment(tip.getTip());
                     }
                 });
                 break;
@@ -259,7 +260,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     items.clear();
                     monthly = false;
                     today = false;
-                    notifyDataSetChanged();
+                    //notifyDataSetChanged();
                 }
 
                 for (HashMap.Entry<?, ?> entry2 : value1.entrySet()) {
@@ -319,7 +320,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 Log.w("DATA", "Failed to read value.", error.toException());
             }
         });
-        startTimer();
     }
 
     private void updateItems(TipBean tip){
@@ -347,5 +347,66 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         notifyItemInserted(items.size() - 1);
         //notifyDataSetChanged();
+    }
+
+    public void updateRows(HashMap<String, HashMap<String, Object>> objTips){
+        firebaseUpdateWorking = true;
+        if(items.size()>0 && objTips != null){
+            items.clear();
+            monthly = false;
+            today = false;
+            //notifyDataSetChanged();
+        }
+
+        for (HashMap.Entry<?, ?> entry2 : objTips.entrySet()) {
+            //print keys and values
+            TipBean tipbean = new TipBean();
+            for (HashMap.Entry<?, ?> entry : ((HashMap<String, Object>) entry2.getValue()).entrySet()) {
+//                        System.out.println("**********\t " + entry.getKey() + " : " + entry.getValue());
+                if (entry.getKey().equals("stopLoss"))
+                    tipbean.stopLoss = entry.getValue().toString();
+                else if (entry.getKey().equals("tipId"))
+                    tipbean.tipId = entry.getValue().toString();
+                else if (entry.getKey().equals("productType"))
+                    tipbean.productType = entry.getValue().toString();
+                else if (entry.getKey().equals("triggerPrice"))
+                    tipbean.triggerPrice = entry.getValue().toString();
+                else if (entry.getKey().equals("targetPrice"))
+                    tipbean.targetPrice = entry.getValue().toString();
+                else if (entry.getKey().equals("tipCreatedAtTime"))
+                    tipbean.tipCreatedAtTime = entry.getValue().toString();
+                else if (entry.getKey().equals("instrumentID"))
+                    tipbean.instrumentID = entry.getValue().toString();
+                else if (entry.getKey().equals("orderQuantity"))
+                    tipbean.orderQuantity = entry.getValue().toString();
+                else if (entry.getKey().equals("tipExpiry"))
+                    tipbean.tipExpiry = entry.getValue().toString();
+                else if (entry.getKey().equals("side"))
+                    tipbean.side = entry.getValue().toString();
+                else if (entry.getKey().equals("symbol"))
+                    tipbean.symbol = entry.getValue().toString();
+                else if (entry.getKey().equals("tipSenderID"))
+                    tipbean.tipSenderID = entry.getValue().toString();
+                else if (entry.getKey().equals("description"))
+                    tipbean.description = entry.getValue().toString();
+                else if (entry.getKey().equals("price"))
+                    tipbean.price = entry.getValue().toString();
+            }
+//                    System.out.println(" \n\n\n new Entry ");
+            tipbean.fetchDataForThisTip();
+            if(curr_page == CONTEXT_ADVISOR && userID.equals(tipbean.tipSenderID)){
+                updateItems(tipbean);
+            }
+            else{
+                if(curr_page == CONTEXT_TIPS){
+                    updateItems(tipbean);
+                }
+            }
+            //items.add(item);
+            //notifyItemInserted(items.size() == 0 ? 0 : items.size() - 1);
+            //notifyDataSetChanged();
+            //Collections.sort(tipList);
+            firebaseUpdateWorking = false;
+        }
     }
 }

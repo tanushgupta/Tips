@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/light_graph_blue">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
@@ -65,9 +65,9 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="5dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:background="@color/buttons_welcome"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:background="@drawable/btn_rounded_corner"
                 android:text="SIGN IN"
                 android:textColor="@color/white"/>
 
@@ -78,9 +78,9 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="20dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:background="@color/colorAccent"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:background="@drawable/rounded_corner_btn_signup"
                 android:text="SIGN UP"
                 android:textColor="@color/white"/>
 

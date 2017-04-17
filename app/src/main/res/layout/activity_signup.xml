@@ -1,51 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/scrollView"
+    style="@android:style/Widget.DeviceDefault.Light.ScrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingBottom="10dp"
+    android:layout_marginBottom="10dp">
 
-    <!-- Email Label -->
-    <EditText android:id="@+id/sign_up_email"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="@string/email"
-        android:ems="10"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"/>
+        android:layout_height="match_parent">
 
-    <!-- Password Label -->
-    <EditText android:id="@+id/sign_up_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="@string/password"
-        android:ems="10"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"/>
+        <ImageView
+            android:src="@drawable/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center_horizontal" />
 
-    <!--Confirm Password Label -->
-    <EditText android:id="@+id/sign_up_confirm_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="@string/confirm_password"
-        android:ems="10"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"/>
+        <EditText
+            android:id="@+id/txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Name"
+            android:ems="10"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
 
-    <Button
-        android:id="@+id/btn_sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
-        android:padding="10dp"
-        android:text="@string/txt_sign_up"
-        android:layout_gravity="center"
-        android:width="100dp"
-        android:background="@color/button_welcome_txt"
-        android:textColor="@color/white"/>
+        <!-- Email Label -->
+        <EditText android:id="@+id/sign_up_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email"
+            android:ems="10"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
 
-</LinearLayout>
+        <!-- Phone Number Label -->
+        <EditText android:id="@+id/user_phone_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="Phone Number"
+            android:ems="10"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
+
+        <!--Broker Label -->
+        <EditText android:id="@+id/user_broker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Broker Name"
+            android:ems="10"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
+
+        <!--Client ID -->
+        <EditText android:id="@+id/user_client_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Client ID"
+            android:ems="10"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
+
+        <!--Broker Label -->
+        <EditText android:id="@+id/user_symbol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Symbol name"
+            android:ems="10"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
+
+        <Button
+            android:id="@+id/btn_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:padding="10dp"
+            android:text="@string/txt_sign_up"
+            android:layout_gravity="center"
+            android:width="100dp"
+            android:background="@color/button_welcome_txt"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+</ScrollView>

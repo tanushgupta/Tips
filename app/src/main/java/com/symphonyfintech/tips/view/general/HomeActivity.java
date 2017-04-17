@@ -31,6 +31,7 @@ import com.symphonyfintech.tips.view.orders.Orders;
 import com.symphonyfintech.tips.adapters.tipsAdapter.TipAdapter;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.view.advisors.AdvisorList;
+import com.symphonyfintech.tips.view.tips.TipsMainActivity;
 
 import org.zeromq.ZMQ;
 
@@ -103,11 +104,11 @@ public class HomeActivity extends Fragment {
     private void initViews(){
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.tipRecycle);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //adapter = new TipAdapter();
         adapter = new BaseRecyclerViewAdapter(new ArrayList<TipList>(),"",0,getActivity());
+        //TipsMainActivity.mainObjFire.setBaseAdapter(adapter);
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {

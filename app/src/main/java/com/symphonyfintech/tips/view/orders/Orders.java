@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.orderAdapter.OrderAdapter;
+import com.symphonyfintech.tips.view.tips.TipsMainActivity;
 
 public class Orders extends AppCompatActivity {
 
@@ -55,7 +56,7 @@ public class Orders extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new OrderAdapter();
+        adapter = new OrderAdapter(((TipsMainActivity)getBaseContext()).getUser().getUserName());
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {

@@ -7,7 +7,9 @@
     <FrameLayout
         android:id="@+id/fragment_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
+
 
     <android.support.design.widget.BottomNavigationView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,9 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/dot_not_selected"
-        app:itemTextColor="@color/white"
+        app:itemBackground="@color/list_header_color"
+        app:itemIconTint="@color/cardview_dark_background"
+        app:itemTextColor="@color/black_overlay"
         app:menu="@menu/menu_navigate_bottom" />
 
 </android.support.design.widget.CoordinatorLayout>

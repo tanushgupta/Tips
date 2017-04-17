@@ -1,7 +1,6 @@
 package com.symphonyfintech.tips.view.general;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,32 +10,23 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.symphonyfintech.tips.R;
+import com.symphonyfintech.tips.adapters.CustomAdapter.AppConnectionStatus;
 import com.symphonyfintech.tips.adapters.CustomAdapter.CustomSwipeAdapter;
 import com.symphonyfintech.tips.adapters.CustomAdapter.LoginAdapter;
-import com.symphonyfintech.tips.model.tips.Tip;
+import com.symphonyfintech.tips.model.user.User;
 import com.symphonyfintech.tips.view.tips.TipsMainActivity;
-
-import org.json.JSONObject;
 
 public class WelcomeActivity extends AppCompatActivity implements OnClickListener{
 
@@ -91,41 +81,25 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
     @Override
     public void onClick(View v) {
         if(v == findViewById(R.id.btn_sign_in)){
-            final AlertDialog.Builder mBuilder = new AlertDialog.Builder(WelcomeActivity.this);
-            final View mView = getLayoutInflater().inflate(R.layout.activity_login, null);
-            final EditText mEmail = (EditText) mView.findViewById(R.id.input_email);
-            final EditText mPassword = (EditText) mView.findViewById(R.id.input_password);
-            Button mLogin = (Button) mView.findViewById(R.id.btn_login);
-            mLogin.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String email = mEmail.getText().toString();
-                    String password = mPassword.getText().toString();
-                    //signInUser(email, password);
-                    //launchRingDialog(mView);
-                    //new LoginAdapter(email,password,getBaseContext());
-                    new BackgroundActivity().execute(new String[]{email,password});
-                }
-            });
-            mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
-            mBuilder.setCancelable(false);
-            mBuilder.setView(mView);
-            dialog = mBuilder.create();
-            dialog.show();
+            if (!AppConnectionStatus.getInstance(this).isOnline()) {
+                Toast.makeText(getBaseContext(),"Not Connected to Internet",Toast.LENGTH_SHORT).show();
+            }
+            Intent intent = new Intent(WelcomeActivity.this, LoginAdapter.class);
+            WelcomeActivity.this.startActivity(intent);
         }
         else if(v == findViewById(R.id.btn_guest_login)){
+            if (!AppConnectionStatus.getInstance(this).isOnline()) {
+                Toast.makeText(getBaseContext(),"Not Connected to Internet",Toast.LENGTH_SHORT).show();
+            }
             anonymousLogin();
         }
         else if(v == findViewById(R.id.btn_sign_up)){
+            if (!AppConnectionStatus.getInstance(this).isOnline()) {
+                Toast.makeText(getBaseContext(),"Not Connected to Internet",Toast.LENGTH_SHORT).show();
+            }
             Intent intent = new Intent(WelcomeActivity.this, SignUpActivity.class);
             WelcomeActivity.this.startActivity(intent);
         }
-
     }
 
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
@@ -213,51 +187,6 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
         }
     }
 
-    private void signUpUser(final String email,final String password){
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("Sign Up: ", "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(getBaseContext(), R.string.auth_signup_failed,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
-    }
-
-    private void signInUser(final String email,final String password){
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("Login: ", "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w("Login: ", "signInWithEmail:failed", task.getException());
-                            Toast.makeText(getBaseContext(), R.string.auth_login_failed,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);
-                            WelcomeActivity.this.startActivity(intent);
-                            finish();
-                        }
-                        // ...
-                    }
-                });
-    }
-
     private void anonymousLogin(){
         mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -274,6 +203,7 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
                         }
                         else{
                             Intent intent = new Intent(WelcomeActivity.this, TipsMainActivity.class);
+                            intent.putExtra("User",new User());
                             WelcomeActivity.this.startActivity(intent);
                             finish();
                         }
@@ -288,44 +218,14 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
         moveTaskToBack(true);
     }
 
-    private class BackgroundActivity extends AsyncTask<String[],Void,String>{
-        private RequestQueue queue;
-        private final String url = "http://103.69.169.2:19003/login/";
-        private String errorMsg ="";
-        //private LoginAdapter loginAdapter;
+    private class BackgroundActivity extends AsyncTask<String,Void,String>{
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
-
         @Override
-        protected String doInBackground(String[]... params) {
-            String[] cred = params[0];
-            //loginAdapter = new LoginAdapter(cred[0],cred[1],getBaseContext());
-            queue = Volley.newRequestQueue(getBaseContext());
-            JSONObject obj = new JSONObject();
-            try{
-                obj.put("username",cred[0]);
-                obj.put("password",cred[1]);
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, obj, new Response.Listener() {
-                @Override
-                public void onResponse(Object response) {
-                    //Toast.makeText(,"Login "+ response.toString(),Toast.LENGTH_LONG).show();
-                    Log.i("Login: ", response.toString());
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.i("Error ",error.toString());
-                    errorMsg = error.toString();
-                }
-            });
-            queue.add(jsObjRequest);
+        protected String doInBackground(String... params) {
             return "Done";
         }
         // This runs in UI when background thread finishes
@@ -333,15 +233,12 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             //Log.i("Res: ","" + loginAdapter.getResult());
-            if(errorMsg.isEmpty()){
-                Toast.makeText(getBaseContext(),"Login Sucessful",Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(),"Login Done",Toast.LENGTH_SHORT).show();
+                /*
                 Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);
                 WelcomeActivity.this.startActivity(intent);
                 finish();
-            }
-            else{
-                Toast.makeText(getBaseContext(),"Login Unsucessful",Toast.LENGTH_LONG).show();
-            }
+                */
         }
     }
 }

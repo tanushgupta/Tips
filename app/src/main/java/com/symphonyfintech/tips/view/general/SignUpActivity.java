@@ -46,6 +46,7 @@ public class SignUpActivity extends AppCompatActivity implements OnClickListener
     @Override
     public void onClick(View v) {
         if(v == findViewById(R.id.btn_sign_up)){
+            /*
             final String email = ((EditText) findViewById(R.id.sign_up_email)).getText().toString();
             final String password = ((EditText)findViewById(R.id.sign_up_password)).getText().toString();
             final String confirm_password = ((EditText)findViewById(R.id.sign_up_confirm_password)).getText().toString();
@@ -84,6 +85,7 @@ public class SignUpActivity extends AppCompatActivity implements OnClickListener
             else{
                 Toast.makeText(getBaseContext(), R.string.empty_field, Toast.LENGTH_SHORT).show();
             }
+            */
             //Log.d("Email: ",email.getText().toString());
         }
     }

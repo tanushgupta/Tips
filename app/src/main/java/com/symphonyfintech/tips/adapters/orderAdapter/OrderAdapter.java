@@ -32,10 +32,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     boolean firebaseUpdateWorking=false;
     private List<OrderBean> tipList ;
     final Handler myHandler;
-    public OrderAdapter() {
+    public OrderAdapter(String userName) {
         myHandler = new Handler();
         tipList = new ArrayList<>();
-        tipsFirebaseRef = FirebaseDatabase.getInstance().getReference("User/ClosedOrders");//Users/himanshu/orders");
+        tipsFirebaseRef = FirebaseDatabase.getInstance().getReference("Users/himanshu/orders");//Users/himanshu/orders");
 //        handler.postDelayed(new SimpleTread(),30L);
 
         tipsFirebaseRef.addValueEventListener(new ValueEventListener() {
@@ -50,6 +50,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 //ArrayList<HashMap<String, Object>> value1 = (ArrayList<HashMap<String, Object>>) dataSnapshot.getValue();
                 if (value1 != null) {
                     tipList = new ArrayList<OrderBean>();
+                }
                     for (HashMap<?, ?> val : value1) {
                         if (val != null) {
                             OrderBean tipbean = new OrderBean();
@@ -79,13 +80,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
                                 //                    }
                                 //                    System.out.println(" \n\n\n new Entry ");
+                                tipList.add(tipbean);
+                                notifyItemInserted(tipList.size() == 0 ? 0 : tipList.size() - 1);
+                                notifyDataSetChanged();
                             }
-                            tipList.add(tipbean);
                         }
                     }
-                    notifyItemInserted(tipList.size() == 0 ? 0 : tipList.size() - 1);
-                    notifyDataSetChanged();
-                }
+
                 firebaseUpdateWorking=false;
             }
 

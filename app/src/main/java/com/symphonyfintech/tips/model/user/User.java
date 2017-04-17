@@ -8,37 +8,28 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class User implements Serializable{
-    private String username;
-    private String emailid;
-    private String password;
+    public static int GUEST_USER = 0;
+    public static int AUTH_USER = 1;
 
-    public User(String username, String emailid, String password){
-        this.emailid = emailid;
-        this.password = password;
-        this.username = username;
+    private String acessToken;
+    private String userName;
+    public int userType;
+
+    public User(){
+        this.userType = GUEST_USER;
     }
 
-    public String getEmailid() {
-        return emailid;
+    public User(String acessToken,String userName) {
+        this.acessToken = acessToken;
+        this.userName = userName;
+        this.userType = 1;
     }
 
-    public void setEmailid(String emailid) {
-        this.emailid = emailid;
+    public String getAcessToken() {
+        return acessToken;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public String getUserName(){
+        return userName;
     }
 }

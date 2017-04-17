@@ -91,7 +91,7 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
             public void onClick(View v) {
                 //fragmentJump(tip);
                 //new DialogTipDetail(mContext,tip);
-                ((TipsMainActivity) mContext).openDetailTipFragment();
+                //((TipsMainActivity) mContext).openDetailTipFragment(tip);
             }
         });
         // Set item views based on your views and data model

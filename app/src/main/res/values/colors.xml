@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black_overlay">#66000000</color>
+    <color name="light_graph_blue">#0077BE</color>
 
     <color name="dot_dark_1">#493521</color>
     <color name="dot_dark_2">#d00031</color>
@@ -20,6 +21,8 @@
 
     <color name="list_header_color">#d3d3d3</color>
     <color name="list_header_text_color">#545454</color>
+
+    <color name="black">#000000</color>
 
     <array name="dot_active">
 
