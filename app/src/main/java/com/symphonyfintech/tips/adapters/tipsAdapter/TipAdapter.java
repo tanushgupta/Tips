@@ -21,10 +21,9 @@ import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.tips.HeaderItem;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.model.tips.TipList;
-import com.symphonyfintech.tips.view.general.HomeActivity;
 import com.symphonyfintech.tips.view.general.ScrollingActivity;
-import com.symphonyfintech.tips.view.tips.TipRow;
-import com.symphonyfintech.tips.view.tips.TipsMainActivity;
+import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
+import com.symphonyfintech.tips.view.tips.ExecuteTip;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -204,7 +203,7 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 delectedTip = tipList.get(i);
-                Intent intent = new Intent(v.getContext(), TipRow.class);
+                Intent intent = new Intent(v.getContext(), ExecuteTip.class);
                 v.getContext().startActivity(intent);
 
             }
@@ -263,8 +262,8 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
 
                     for(TipBean tip :tipList){
                         Long key= Long.parseLong(tip.instrumentID);
-                        if(TipsMainActivity.marketData.containsKey(key)){
-                            tip.livePrice =  TipsMainActivity.marketData.get(key)/100;
+                        if(OneTouchMainActivity.marketData.containsKey(key)){
+                            tip.livePrice =  OneTouchMainActivity.marketData.get(key)/100;
                             createThread();
                         }
                     }

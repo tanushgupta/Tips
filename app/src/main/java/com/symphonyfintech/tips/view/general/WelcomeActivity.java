@@ -26,7 +26,6 @@ import com.symphonyfintech.tips.adapters.CustomAdapter.AppConnectionStatus;
 import com.symphonyfintech.tips.adapters.CustomAdapter.CustomSwipeAdapter;
 import com.symphonyfintech.tips.adapters.CustomAdapter.LoginAdapter;
 import com.symphonyfintech.tips.model.user.User;
-import com.symphonyfintech.tips.view.tips.TipsMainActivity;
 
 public class WelcomeActivity extends AppCompatActivity implements OnClickListener{
 
@@ -84,21 +83,27 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
             if (!AppConnectionStatus.getInstance(this).isOnline()) {
                 Toast.makeText(getBaseContext(),"Not Connected to Internet",Toast.LENGTH_SHORT).show();
             }
-            Intent intent = new Intent(WelcomeActivity.this, LoginAdapter.class);
-            WelcomeActivity.this.startActivity(intent);
+            else{
+                Intent intent = new Intent(WelcomeActivity.this, LoginAdapter.class);
+                WelcomeActivity.this.startActivity(intent);
+            }
         }
         else if(v == findViewById(R.id.btn_guest_login)){
             if (!AppConnectionStatus.getInstance(this).isOnline()) {
                 Toast.makeText(getBaseContext(),"Not Connected to Internet",Toast.LENGTH_SHORT).show();
             }
-            anonymousLogin();
+            else{
+                anonymousLogin();
+            }
         }
         else if(v == findViewById(R.id.btn_sign_up)){
             if (!AppConnectionStatus.getInstance(this).isOnline()) {
                 Toast.makeText(getBaseContext(),"Not Connected to Internet",Toast.LENGTH_SHORT).show();
             }
-            Intent intent = new Intent(WelcomeActivity.this, SignUpActivity.class);
-            WelcomeActivity.this.startActivity(intent);
+            else{
+                Intent intent = new Intent(WelcomeActivity.this, SignUpActivity.class);
+                WelcomeActivity.this.startActivity(intent);
+            }
         }
     }
 
@@ -202,7 +207,7 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
                                     Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            Intent intent = new Intent(WelcomeActivity.this, TipsMainActivity.class);
+                            Intent intent = new Intent(WelcomeActivity.this, OneTouchMainActivity.class);
                             intent.putExtra("User",new User());
                             WelcomeActivity.this.startActivity(intent);
                             finish();
@@ -235,7 +240,7 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
             //Log.i("Res: ","" + loginAdapter.getResult());
             Toast.makeText(getBaseContext(),"Login Done",Toast.LENGTH_SHORT).show();
                 /*
-                Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, TipsListFragment.class);
                 WelcomeActivity.this.startActivity(intent);
                 finish();
                 */

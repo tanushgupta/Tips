@@ -19,7 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.user.User;
-import com.symphonyfintech.tips.view.tips.TipsMainActivity;
+import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 import org.json.JSONObject;
 
@@ -45,16 +45,21 @@ public class LoginAdapter extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onClick(View v) {
-        dialog = new ProgressDialog(this);
-        dialog.setIndeterminate(true);
-        dialog.setCancelable(false);
-        dialog.setTitle("Logging In..");
-        dialog.setMessage("Please wait.");
-        dialog.show();
-        mLogin.setEnabled(false);
-        userName = ((EditText) findViewById(R.id.input_userName)).getText().toString().trim();
-        String password = ((EditText) findViewById(R.id.input_password)).getText().toString().trim();
-        checkLogin(password);
+        if(AppConnectionStatus.getInstance(this).isOnline()){
+            dialog = new ProgressDialog(this);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.setTitle("Logging In..");
+            dialog.setMessage("Please wait.");
+            dialog.show();
+            mLogin.setEnabled(false);
+            userName = ((EditText) findViewById(R.id.input_userName)).getText().toString().trim();
+            String password = ((EditText) findViewById(R.id.input_password)).getText().toString().trim();
+            checkLogin(password);
+        }
+        else{
+            Toast.makeText(this,"Not connected to network.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void checkLogin(String password){
@@ -81,7 +86,7 @@ public class LoginAdapter extends AppCompatActivity implements Response.Listener
                 Toast.makeText(this,response.get("errorMessage").toString(),Toast.LENGTH_SHORT).show();
             }
             else{
-                Intent intent = new Intent(LoginAdapter.this, TipsMainActivity.class);
+                Intent intent = new Intent(LoginAdapter.this, OneTouchMainActivity.class);
                 intent.putExtra("User",new User(response.get("acessToken").toString(),userName));
                 LoginAdapter.this.startActivity(intent);
                 finish();
@@ -95,9 +100,14 @@ public class LoginAdapter extends AppCompatActivity implements Response.Listener
     @Override
     public void onErrorResponse(VolleyError error) {
         dialog.dismiss();
-        Log.i("Error ",error.getMessage().toString());
-        Toast.makeText(this,error.getMessage().toString().toUpperCase(),Toast.LENGTH_SHORT).show();
         mLogin.setEnabled(true);
+        try{
+            Log.i("Error ",error.getMessage().toString());
+            Toast.makeText(this,error.getMessage().toString().toUpperCase(),Toast.LENGTH_SHORT).show();
+        }
+        catch (NullPointerException ex){
+            Toast.makeText(this,"Server Down, Try again later.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

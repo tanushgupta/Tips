@@ -1,7 +1,6 @@
 package com.symphonyfintech.tips.adapters.tipsAdapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -11,9 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,13 +22,9 @@ import com.symphonyfintech.tips.model.tips.HeaderItem;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.model.tips.TipItem;
 import com.symphonyfintech.tips.model.tips.TipList;
-import com.symphonyfintech.tips.view.general.HomeActivity;
-import com.symphonyfintech.tips.view.general.ScrollingActivity;
-import com.symphonyfintech.tips.view.tips.TipRow;
-import com.symphonyfintech.tips.view.tips.TipsMainActivity;
+import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -138,8 +131,8 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext,"Working on the execute page.",Toast.LENGTH_SHORT).show();
-                        ((TipsMainActivity) mContext).openDetailTipFragment(tip.getTip());
+                        //Toast.makeText(mContext,"Working on the execute page.",Toast.LENGTH_SHORT).show();
+                        ((OneTouchMainActivity) mContext).openDetailTipFragment(tip.getTip());
                     }
                 });
                 break;
@@ -173,9 +166,9 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     if(tiptype.getType() == TipList.TYPE_EVENT){
                         TipBean tip = ((TipItem)tiptype).getTip();
                         Long key= Long.parseLong(tip.instrumentID);
-                        Log.i("Live Price: ","===================================== "+ TipsMainActivity.marketData.get(key) + "===============================");
-                        if(TipsMainActivity.marketData.containsKey(key)){
-                            tip.livePrice =  TipsMainActivity.marketData.get(key)/100;
+                        Log.i("Live Price: ","===================================== "+ OneTouchMainActivity.marketData.get(key) + "===============================");
+                        if(OneTouchMainActivity.marketData.containsKey(key)){
+                            tip.livePrice =  OneTouchMainActivity.marketData.get(key)/100;
                             createThread();
                         }
                     }

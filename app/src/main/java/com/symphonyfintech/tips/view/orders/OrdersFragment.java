@@ -5,12 +5,18 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.CustomAdapter.CustomOrderPager;
+import com.symphonyfintech.tips.adapters.orderAdapter.OrderAdapter;
+import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 /**
  * Created by Tanush on 4/7/2017.
@@ -20,7 +26,6 @@ public class OrdersFragment extends Fragment {
 
     private View view;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,9 +38,7 @@ public class OrdersFragment extends Fragment {
     }
 
     private void initViews(){
-        viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-
 
         final TabLayout.Tab tab_pending = tabLayout.newTab();
         final TabLayout.Tab tab_open = tabLayout.newTab();
@@ -54,8 +57,5 @@ public class OrdersFragment extends Fragment {
 
         tabLayout.setTabTextColors(ContextCompat.getColorStateList(getActivity(),R.color.dot_dark_3));
         tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getActivity(),R.color.white));
-
-        //CustomOrderPager customOrderPager = new CustomOrderPager(getActivity().getBaseContext());
-        //viewPager.setAdapter(customOrderPager);
     }
 }

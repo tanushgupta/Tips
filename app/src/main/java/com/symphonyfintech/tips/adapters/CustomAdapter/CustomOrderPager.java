@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.orderAdapter.OrderAdapter;
-import com.symphonyfintech.tips.view.tips.TipsMainActivity;
+import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 /**
  * Created by Tanush on 4/17/2017.
@@ -46,7 +46,7 @@ public class CustomOrderPager extends PagerAdapter{
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(ctx));
 
-        RecyclerView.Adapter adapter = new OrderAdapter(((TipsMainActivity)ctx).getUser().getUserName());
+        RecyclerView.Adapter adapter = new OrderAdapter(((OneTouchMainActivity)ctx).getUser().getUserName());
         recycleView.setAdapter(adapter);
 
         recycleView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {

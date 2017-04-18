@@ -30,19 +30,19 @@
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
-            android:name=".view.tips.TipsMainActivity"
+            android:name=".view.general.OneTouchMainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity android:name=".view.general.ScrollingActivity"></activity>
         <activity
             android:name=".view.advisors.Advisor"
-            android:parentActivityName=".view.tips.TipsMainActivity">
+            android:parentActivityName=".view.general.OneTouchMainActivity">
         </activity>
         <activity android:name=".view.advisors.advisor_row"></activity>
         <activity
             android:name=".view.orders.Orders"
             android:label="@string/label_orders"
-            android:parentActivityName=".view.tips.TipsMainActivity"
+            android:parentActivityName=".view.general.OneTouchMainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
     </application>

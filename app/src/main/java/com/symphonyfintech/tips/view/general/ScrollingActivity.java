@@ -18,7 +18,7 @@ import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.CustomAdapter.ImageLoadTask;
 import com.symphonyfintech.tips.adapters.tipsAdapter.TipAdapter;
 import com.symphonyfintech.tips.model.tips.TipBean;
-import com.symphonyfintech.tips.view.tips.TipRow;
+import com.symphonyfintech.tips.view.tips.ExecuteTip;
 
 
 public class ScrollingActivity extends AppCompatActivity {
@@ -36,7 +36,7 @@ public class ScrollingActivity extends AppCompatActivity {
         execute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), TipRow.class);
+                Intent intent = new Intent(v.getContext(), ExecuteTip.class);
                 v.getContext().startActivity(intent);
             }
         });

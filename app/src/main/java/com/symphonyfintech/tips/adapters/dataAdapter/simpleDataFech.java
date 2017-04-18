@@ -2,8 +2,7 @@ package com.symphonyfintech.tips.adapters.dataAdapter;
 
 import com.symphonyfintech.tips.adapters.feedAdapter.MarketPicture;
 import com.symphonyfintech.tips.adapters.feedAdapter.Parser;
-import com.symphonyfintech.tips.view.general.HomeActivity;
-import com.symphonyfintech.tips.view.tips.TipsMainActivity;
+import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 import org.zeromq.ZMQ;
 
@@ -29,7 +28,7 @@ public class simpleDataFech implements Runnable {
         @Override
         public void run() {
             Parser extractor =  new Parser(ByteOrder.LITTLE_ENDIAN);
-            ZMQ.Socket subscriber = TipsMainActivity.ctx.socket(ZMQ.SUB);
+            ZMQ.Socket subscriber = OneTouchMainActivity.ctx.socket(ZMQ.SUB);
             subscriber.connect("tcp://103.69.169.10:5289");
             subscriber.subscribe(ZMQ.SUBSCRIPTION_ALL);
 //            subscriber.subscribe(Id.getBytes());
@@ -42,7 +41,7 @@ public class simpleDataFech implements Runnable {
 //                System.out.println("******** "+buffer.getInt(35));
                 final MarketPicture result = extractor.fillMarketPicture(msg, 0);
 //                System.out.println("Key : "+result.getInstrumentIdentifier() +" Value :"+(result.getLastTradedPrice()/100));
-                TipsMainActivity.marketData.put(result.getInstrumentIdentifier() , Double.parseDouble(result.getLastTradedPrice()+""));
+                OneTouchMainActivity.marketData.put(result.getInstrumentIdentifier() , Double.parseDouble(result.getLastTradedPrice()+""));
 //                System.out.println(result.toString());
             }
         }

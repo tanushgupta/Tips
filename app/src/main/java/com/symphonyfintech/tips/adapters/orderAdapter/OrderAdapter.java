@@ -17,8 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.order.OrderBean;
-import com.symphonyfintech.tips.view.general.HomeActivity;
-import com.symphonyfintech.tips.view.tips.TipsMainActivity;
+import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,47 +45,45 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 // whenever data at this location is updated.
                 Log.i("", "**************** OrdersSnapShot" + dataSnapshot.getValue().toString());
                 Object dtata = dataSnapshot.getValue();
-                ArrayList<HashMap<String, HashMap<String, Object>>> value1 = (ArrayList<HashMap<String, HashMap<String, Object>>>) dataSnapshot.getValue();
+                HashMap<String, HashMap<String, Object>> val = (HashMap<String, HashMap<String, Object>>) dataSnapshot.getValue();
                 //ArrayList<HashMap<String, Object>> value1 = (ArrayList<HashMap<String, Object>>) dataSnapshot.getValue();
-                if (value1 != null) {
+                if (val != null) {
                     tipList = new ArrayList<OrderBean>();
                 }
-                    for (HashMap<?, ?> val : value1) {
-                        if (val != null) {
-                            OrderBean tipbean = new OrderBean();
-                            for (HashMap.Entry<?, ?> entry : val.entrySet()) {
-                                //print keys and values
-                                //                    for (HashMap.Entry<?, ?> entry : ((HashMap<String, Object>) entry2.getValue()).entrySet()) {
-                                //                        System.out.println("**********\t " + entry.getKey() + " : " + entry.getValue());
-                                if (entry.getKey().equals("OrderId"))
-                                    tipbean.OrderId = entry.getValue().toString();
-                                else if (entry.getKey().equals("Symbol"))
-                                    tipbean.Symbol = entry.getValue().toString();
-                                else if (entry.getKey().equals("price"))
-                                    tipbean.price = entry.getValue().toString();
-                                else if (entry.getKey().equals("side"))
-                                    tipbean.side = entry.getValue().toString();
-                                else if (entry.getKey().equals("Remark"))
-                                    tipbean.Remark = entry.getValue().toString();
-                                else if (entry.getKey().equals("QTY"))
-                                    tipbean.QTY = entry.getValue().toString();
-                                else if (entry.getKey().equals("status"))
-                                    tipbean.status = entry.getValue().toString();
-                                else if (entry.getKey().equals("TotalIncome"))
-                                    tipbean.TotalIncome = entry.getValue().toString();
-                                else if (entry.getKey().equals("instrumentID"))
-                                    tipbean.instrumentID = entry.getValue().toString();
+
+                if (val != null) {
+                    OrderBean tipbean = new OrderBean();
+                    for (HashMap.Entry<?, ?> entry : val.entrySet()) {
+                        //print keys and values
+                        //                    for (HashMap.Entry<?, ?> entry : ((HashMap<String, Object>) entry2.getValue()).entrySet()) {
+                        //                        System.out.println("**********\t " + entry.getKey() + " : " + entry.getValue());
+                        if (entry.getKey().equals("OrderId"))
+                            tipbean.OrderId = entry.getValue().toString();
+                        else if (entry.getKey().equals("Symbol"))
+                            tipbean.Symbol = entry.getValue().toString();
+                        else if (entry.getKey().equals("price"))
+                            tipbean.price = entry.getValue().toString();
+                        else if (entry.getKey().equals("side"))
+                            tipbean.side = entry.getValue().toString();
+                        else if (entry.getKey().equals("Remark"))
+                            tipbean.Remark = entry.getValue().toString();
+                        else if (entry.getKey().equals("QTY"))
+                            tipbean.QTY = entry.getValue().toString();
+                        else if (entry.getKey().equals("status"))
+                            tipbean.status = entry.getValue().toString();
+                        else if (entry.getKey().equals("TotalIncome"))
+                            tipbean.TotalIncome = entry.getValue().toString();
+                        else if (entry.getKey().equals("instrumentID"))
+                            tipbean.instrumentID = entry.getValue().toString();
 
 
-                                //                    }
-                                //                    System.out.println(" \n\n\n new Entry ");
-                                tipList.add(tipbean);
-                                notifyItemInserted(tipList.size() == 0 ? 0 : tipList.size() - 1);
-                                notifyDataSetChanged();
-                            }
-                        }
+                        //                    }
+                        //                    System.out.println(" \n\n\n new Entry ");
+                        tipList.add(tipbean);
+                        notifyItemInserted(tipList.size() == 0 ? 0 : tipList.size() - 1);
+                        notifyDataSetChanged();
                     }
-
+                }
                 firebaseUpdateWorking=false;
             }
 
@@ -159,13 +156,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                     if(firebaseUpdateWorking)
                         return;
 
+                    /*
                     for(OrderBean order :tipList){
                         Long key= Long.parseLong(order.instrumentID);
-                        if(TipsMainActivity.marketData.containsKey(key)){
-                            order.livePrice =  (TipsMainActivity.marketData.get(key)/100)+"";
+                        if(OneTouchMainActivity.marketData.containsKey(key)){
+                            order.livePrice =  (OneTouchMainActivity.marketData.get(key)/100)+"";
                             createThread();
                         }
                     }
+                    */
                 }
         }, 0, 1000);
     }

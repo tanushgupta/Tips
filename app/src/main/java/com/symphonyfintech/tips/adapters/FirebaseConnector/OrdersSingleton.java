@@ -34,7 +34,7 @@ public class OrdersSingleton implements ValueEventListener{
 
     private OrdersSingleton() {
         //Log.i("OrdersSingleton Initialized: ", "***************** Inside constructor *********************");
-        firebaseObj = FirebaseDatabase.getInstance().getReference("/");
+        firebaseObj = FirebaseDatabase.getInstance().getReference("Users/");
         firebaseObj.addValueEventListener(this);
     }
 
@@ -65,7 +65,7 @@ public class OrdersSingleton implements ValueEventListener{
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        //Log.i("", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! AllDATASnapShot: " + dataSnapshot.toString() + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.i("", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ORDERSDATASnapShot: " + dataSnapshot.toString() + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         HashMap<String, HashMap<String, Object>> value = (HashMap<String, HashMap<String, Object>>) dataSnapshot.getValue();
         for (HashMap.Entry<?, ?> kvpair : value.entrySet()) {
             Log.i("Key: ", "************************** "+ kvpair.getKey().toString() + "**********************************");

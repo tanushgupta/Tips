@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,10 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.tips.TipBean;
-import com.symphonyfintech.tips.view.general.HomeActivity;
 import com.symphonyfintech.tips.view.general.ScrollingActivity;
-import com.symphonyfintech.tips.view.tips.TipRow;
-import com.symphonyfintech.tips.view.tips.TipsMainActivity;
+import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -189,7 +186,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
                     @Override
                     public void onClick(View v) {
                         delectedTip=tipList.get(i);
-                        Intent intent = new Intent(v.getContext(), TipRow.class);
+                        Intent intent = new Intent(v.getContext(), ExecuteTip.class);
                         v.getContext().startActivity(intent);
 
                     }
@@ -243,8 +240,8 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
 
                     for(TipBean tip :tipList){
                         Long key= Long.parseLong(tip.instrumentID);
-                        if(TipsMainActivity.marketData.containsKey(key)){
-                            tip.livePrice =  TipsMainActivity.marketData.get(key)/100;
+                        if(OneTouchMainActivity.marketData.containsKey(key)){
+                            tip.livePrice =  OneTouchMainActivity.marketData.get(key)/100;
     //                        mHandler.obtainMessage(1).sendToTarget();
                             createThread();
                         }

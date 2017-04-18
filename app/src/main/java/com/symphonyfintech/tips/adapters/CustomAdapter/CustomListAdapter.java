@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.tips.Tip;
-import com.symphonyfintech.tips.view.tips.TipsMainActivity;
 
 import java.util.List;
 
@@ -91,7 +90,7 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
             public void onClick(View v) {
                 //fragmentJump(tip);
                 //new DialogTipDetail(mContext,tip);
-                //((TipsMainActivity) mContext).openDetailTipFragment(tip);
+                //((OneTouchMainActivity) mContext).openDetailTipFragment(tip);
             }
         });
         // Set item views based on your views and data model
