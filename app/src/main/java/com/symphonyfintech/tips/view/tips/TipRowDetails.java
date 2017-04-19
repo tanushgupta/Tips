@@ -69,7 +69,7 @@ public class TipRowDetails extends Fragment {
         });
         series.setColor(Color.WHITE);
         series.setThickness(5);
-        graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.NONE );
+        graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.HORIZONTAL );
         graph.addSeries(series);
         final User user = ((OneTouchMainActivity)getActivity()).getUser();
         if(user.userType == User.GUEST_USER){

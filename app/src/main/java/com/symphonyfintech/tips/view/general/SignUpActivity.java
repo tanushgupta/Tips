@@ -1,6 +1,9 @@
 package com.symphonyfintech.tips.view.general;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,15 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Switch;
 import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.symphonyfintech.tips.R;
+import com.symphonyfintech.tips.adapters.CustomAdapter.Mail;
 
 /**
  * Created by Tanush on 4/3/2017.
@@ -27,8 +27,12 @@ public class SignUpActivity extends AppCompatActivity implements OnClickListener
 
     private Pattern pattern;
     private Matcher matcher;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    private ProgressDialog pDialog;
+
+    private String subject;
+    private String body;
+
+    private Mail m;
 
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -39,54 +43,76 @@ public class SignUpActivity extends AppCompatActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         findViewById(R.id.btn_sign_up).setOnClickListener(this);
+        m = new Mail();
+        String[] toArr = {"tanush1122@gmail.com"};
+        m.set_to(toArr);
         pattern = Pattern.compile(EMAIL_PATTERN);
-        mAuth = FirebaseAuth.getInstance();
+    }
+
+    private String composeEmail() {
+        m.set_subject(subject);
+        m.set_body(body);
+        try {
+            if(m.send()) {
+                //Toast.makeText(this, "Email was sent successfully.", Toast.LENGTH_LONG).show();
+                return "Email was sent successfully.";
+            } else {
+                //Toast.makeText(this, "Email was not sent.", Toast.LENGTH_LONG).show();
+                return "Email was sent successfully.";
+            }
+        } catch(Exception e) {
+            //Toast.makeText(this, "There was a problem sending the email.", Toast.LENGTH_LONG).show();
+            Log.i("MailApp", "Could not send email", e);
+            return "Could not send email" + e;
+        }
     }
 
     @Override
     public void onClick(View v) {
         if(v == findViewById(R.id.btn_sign_up)){
-            /*
-            final String email = ((EditText) findViewById(R.id.sign_up_email)).getText().toString();
-            final String password = ((EditText)findViewById(R.id.sign_up_password)).getText().toString();
-            final String confirm_password = ((EditText)findViewById(R.id.sign_up_confirm_password)).getText().toString();
-            if(!email.equals("") && !password.equals("") && !confirm_password.equals("")){
-                if(password.equals(confirm_password)){
-                    matcher = pattern.matcher(email);
-                    if(matcher.matches()){
-                        mAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        Log.d("Sign Up: ", "createUserWithEmail:onComplete:" + task.isSuccessful());
+            Toast.makeText(this, "Sending mail... Please wait", Toast.LENGTH_SHORT).show();
+            String consumer = "Analyst";
+            if(((Switch)findViewById(R.id.switch_consumer)).isChecked()){
+                consumer = "consumer";
+            }
+            subject = "New User sign up on 1Touch.";
+            body = "Following are the details of a user who wants to connect to 1Touch"+
+                    "name: " + ((EditText)findViewById(R.id.txt_name)).getText().toString() +"\n"+
+                    "email: " + ((EditText)findViewById(R.id.sign_up_email)).getText().toString() +"\n"+
+                    "phone_number: " + ((EditText)findViewById(R.id.user_phone_no)).getText().toString() +"\n"+
+                    "broker: " + ((EditText)findViewById(R.id.user_broker)).getText().toString() +"\n"+
+                    "client_account_id: " + ((EditText)findViewById(R.id.user_client_id)).getText().toString() +"\n"+
+                    "user_type: " + consumer +"\n";
 
-                                        // If sign in fails, display a message to the user. If sign in succeeds
-                                        // the auth state listener will be notified and logic to handle the
-                                        // signed in user can be handled in the listener.
-                                        if (!task.isSuccessful()) {
-                                            Toast.makeText(getBaseContext(), R.string.sign_up_failed, Toast.LENGTH_SHORT).show();
-                                        }
-                                        else {
-                                            Toast.makeText(getBaseContext(), R.string.sign_up_successful, Toast.LENGTH_SHORT).show();
-                                            finish();
-                                        }
-                                        // ...
-                                    }
-                                });
-                    }
-                    else{
-                        ((EditText) findViewById(R.id.sign_up_email)).setError("Enter a valid Email address.");
-                    }
-                }
-                else{
-                    ((EditText)findViewById(R.id.sign_up_confirm_password)).setError("Same as password");
-                }
+            new Connection().execute("");
+        }
+    }
+
+    class Connection extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //pDialog = new ProgressDialog(SignUpActivity.this);
+            //pDialog.setMessage("Attempting Sign up...");
+            //pDialog.setIndeterminate(false);
+            //pDialog.setCancelable(false);
+            //pDialog.show();
+            pDialog = ProgressDialog.show(SignUpActivity.this, "", "Attempting Sign up...", true);
+        }
+
+        protected String doInBackground(String... urls) {
+            return composeEmail();
+        }
+
+        protected void onPostExecute(String param) {
+            super.onPostExecute(param);
+            if (pDialog != null) {
+                pDialog.dismiss();
+                pDialog = null;
             }
-            else{
-                Toast.makeText(getBaseContext(), R.string.empty_field, Toast.LENGTH_SHORT).show();
-            }
-            */
-            //Log.d("Email: ",email.getText().toString());
+            Toast.makeText(SignUpActivity.this,""+ param,Toast.LENGTH_SHORT).show();
         }
     }
 }
+
