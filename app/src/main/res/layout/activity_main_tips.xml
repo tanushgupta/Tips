@@ -8,7 +8,8 @@
         android:id="@+id/fragment_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:layout_marginBottom="45dp"/>
 
 
     <android.support.design.widget.BottomNavigationView
@@ -16,11 +17,12 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/navigate_Bottom_Bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_gravity="bottom"
-        app:itemBackground="@color/list_header_color"
+        app:itemBackground="@color/white"
         app:itemIconTint="@color/cardview_dark_background"
         app:itemTextColor="@color/black_overlay"
+        android:elevation="4sp"
         app:menu="@menu/menu_navigate_bottom" />
 
 </android.support.design.widget.CoordinatorLayout>

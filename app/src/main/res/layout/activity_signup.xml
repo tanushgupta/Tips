@@ -83,6 +83,22 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Are you a Consumer?"
+            android:layout_gravity="center"/>
+
+        <Switch
+            android:id="@+id/switch_consumer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="Yes"
+            android:textOff="No"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            />
+
         <Button
             android:id="@+id/btn_sign_up"
             android:layout_width="wrap_content"

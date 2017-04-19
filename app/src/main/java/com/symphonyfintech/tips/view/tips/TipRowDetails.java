@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.symphonyfintech.tips.R;
@@ -68,6 +69,7 @@ public class TipRowDetails extends Fragment {
         });
         series.setColor(Color.WHITE);
         series.setThickness(5);
+        graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.NONE );
         graph.addSeries(series);
         final User user = ((OneTouchMainActivity)getActivity()).getUser();
         if(user.userType == User.GUEST_USER){
