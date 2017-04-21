@@ -139,6 +139,10 @@ public class CollapsingImageLayout extends FrameLayout {
                     mTitleLeftExpanded = child.getLeft();
                     mTitleTopExpanded = child.getTop();
                     break;
+                case R.id.profilepicImg:
+                    mImageLeftExpanded = child.getLeft();
+                    mImageTopExpanded = child.getTop();
+                    break;
                 /*case R.id.subtitle:
                     mSubtitleLeftExpanded = child.getLeft();
                     mSubtitleTopExpanded = child.getTop();
@@ -184,7 +188,19 @@ public class CollapsingImageLayout extends FrameLayout {
                     offsetHelper.setTopAndBottomOffset(offset); // parallax
                 }
 
-                if (child.getId() == R.id.graph) {
+                if(child.getId() == R.id.advisor_display_title){
+
+                }
+
+                if(child.getId() == R.id.profilepicImg){
+                    float scaleFactor = 1F - offsetFactor * .5F ;
+                    child.setScaleY(scaleFactor);
+                    int topOffset = (int) ((mImageTopCollapsed - mImageTopExpanded) * offsetFactor) - verticalOffset;
+                    child.setPivotY(0);
+                    offsetHelper.setTopAndBottomOffset(topOffset);
+                }
+
+                /*if (child.getId() == R.id.graph) {
 
                     float scaleFactor = 1F - offsetFactor * .5F ;
                     child.setScaleX(scaleFactor);
@@ -196,7 +212,7 @@ public class CollapsingImageLayout extends FrameLayout {
                     child.setPivotY(0);
                     offsetHelper.setTopAndBottomOffset(topOffset);
                     offsetHelper.setLeftAndRightOffset(leftOffset);
-                }
+                }*/
 
                 if (child.getId() == R.id.title) {
 

@@ -89,7 +89,6 @@ public class TipsListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //adapter = new TipAdapter();
         adapter = new BaseRecyclerViewAdapter(new ArrayList<TipList>(),"",0,getActivity());
         //OneTouchMainActivity.mainObjFire.setBaseAdapter(adapter);
         recyclerView.setAdapter(adapter);

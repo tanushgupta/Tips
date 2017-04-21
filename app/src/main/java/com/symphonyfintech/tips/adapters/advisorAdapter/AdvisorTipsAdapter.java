@@ -18,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.model.tips.TipBean;
-import com.symphonyfintech.tips.view.general.ScrollingActivity;
 import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 import java.util.ArrayList;
@@ -119,6 +118,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int i) {
+        /*
         viewHolder.txt_Symbol.setText(tipList.get(i).symbol);
 
         viewHolder.txt_Symbol.setOnClickListener(new View.OnClickListener() {
@@ -182,7 +182,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
             }
         });
         viewHolder.txt_stopLoss.setText(tipList.get(i).stopLoss.equalsIgnoreCase("null") ?"NA":tipList.get(i).stopLoss+ "₹");
-        /*viewHolder.btn_exe_tip.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btn_exe_tip.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         delectedTip=tipList.get(i);
@@ -190,7 +190,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
                         v.getContext().startActivity(intent);
 
                     }
-                });*/
+                });
         DatabaseReference advisor = FirebaseDatabase.getInstance().getReference("Users/"+tipList.get(i).tipSenderID);
 //        handler.postDelayed(new SimpleTread(),30L);
 
@@ -207,6 +207,7 @@ public class AdvisorTipsAdapter extends RecyclerView.Adapter<AdvisorTipsAdapter.
                 Log.w("DATA", "Failed to read value.", error.toException());
             }
         });
+        */
     }
  
     @Override

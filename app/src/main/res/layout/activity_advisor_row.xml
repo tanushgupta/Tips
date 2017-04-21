@@ -1,95 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_advisor_row"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
+    android:layout_marginTop="1dp"
+    card_view:cardCornerRadius="3sp"
+    card_view:cardElevation="4sp">
 
-    <android.support.v7.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:id="@+id/cardView">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="58dp">
+        <ImageView
+            android:id="@+id/tiprow_profileIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_round" />
 
-            <ImageView
-                android:layout_width="46dp"
-                android:layout_height="41dp"
-                app:srcCompat="@drawable/symphonydefaulticon"
-                android:layout_marginStart="9dp"
-                android:id="@+id/tiprow_profileIcon"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="9dp" />
+        <TextView
+            android:id="@+id/tiprow_analystName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/tiprow_profileIcon"
+            android:text="Unknown user"
+            android:textColor="@android:color/black"
+            android:textStyle="normal|bold" />
 
-            <TextView
-                android:text="Unknown user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/txt_tip_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tiprow_analystName"
+            android:layout_below="@+id/tiprow_analystName"
+            android:text="00"
+            android:textSize="20sp" />
 
-                android:layout_marginStart="74dp"
-                android:layout_marginTop="8dp"
-                android:id="@+id/tiprow_analystName"
-                android:textColor="@android:color/black"
-                android:textStyle="normal|bold" />
+        <TextView
+            android:id="@+id/txtkdncjd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txt_tip_count"
+            android:layout_alignBottom="@+id/txt_tip_count"
+            android:layout_marginRight="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/txt_tip_count"
+            android:text="Tips "
+            android:textSize="10sp" />
 
-            <TextView
-                android:text="00"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_tip_count"
-                android:layout_alignBottom="@+id/tiprow_profileIcon"
-                android:layout_alignStart="@+id/tiprow_analystName" />
+        <TextView
+            android:id="@+id/tiprow_executedTipCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtkdncjd"
+            android:layout_alignBottom="@+id/txtkdncjd"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/txtkdncjd"
+            android:text="00"
+            android:textSize="20sp" />
 
-            <TextView
-                android:text="Tips "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="9dp"
-                android:id="@+id/txtkdncjd"
-                android:layout_alignBaseline="@+id/txt_tip_count"
-                android:layout_alignBottom="@+id/txt_tip_count"
-                android:layout_toEndOf="@+id/txt_tip_count"
-                android:textSize="10sp" />
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tiprow_executedTipCount"
+            android:layout_alignBottom="@+id/tiprow_executedTipCount"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/tiprow_executedTipCount"
+            android:text="Tip Execution"
+            android:textSize="10sp" />
 
-            <TextView
-                android:text="00"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:id="@+id/tiprow_executedTipCount"
-                android:layout_alignBaseline="@+id/txtkdncjd"
-                android:layout_alignBottom="@+id/txtkdncjd"
-                android:layout_toEndOf="@+id/txtkdncjd" />
+        <!--<TextView
+            android:text="*"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="7dp"
+            android:id="@+id/textView23"
+            android:layout_alignBaseline="@+id/tiprow_analystName"
+            android:layout_alignBottom="@+id/tiprow_analystName"
+            android:layout_alignParentEnd="true" />-->
+        <ImageView
+            android:id="@+id/img_fav_advisor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_fav_advisor" />
+    </RelativeLayout>
 
-            <TextView
-                android:text="Tip Execution"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView22"
-                android:layout_marginStart="9dp"
-                android:layout_alignBaseline="@+id/tiprow_executedTipCount"
-                android:layout_alignBottom="@+id/tiprow_executedTipCount"
-                android:layout_toEndOf="@+id/tiprow_executedTipCount"
-                android:textSize="10sp" />
-
-            <TextView
-                android:text="*"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="7dp"
-                android:id="@+id/textView23"
-                android:layout_alignBaseline="@+id/tiprow_analystName"
-                android:layout_alignBottom="@+id/tiprow_analystName"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-</RelativeLayout>
+</android.support.v7.widget.CardView>

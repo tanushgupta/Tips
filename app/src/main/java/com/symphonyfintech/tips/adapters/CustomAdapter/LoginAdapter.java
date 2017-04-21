@@ -101,12 +101,18 @@ public class LoginAdapter extends AppCompatActivity implements Response.Listener
     public void onErrorResponse(VolleyError error) {
         dialog.dismiss();
         mLogin.setEnabled(true);
+        error.printStackTrace();
         try{
             Log.i("Error ",error.getMessage().toString());
             Toast.makeText(this,error.getMessage().toString().toUpperCase(),Toast.LENGTH_SHORT).show();
         }
         catch (NullPointerException ex){
             Toast.makeText(this,"Server Down, Try again later.",Toast.LENGTH_SHORT).show();
+            ex.printStackTrace();
+        }
+        catch (Exception ex){
+            Toast.makeText(this,"Exception: " + ex.toString(),Toast.LENGTH_SHORT).show();
+            ex.printStackTrace();
         }
     }
 

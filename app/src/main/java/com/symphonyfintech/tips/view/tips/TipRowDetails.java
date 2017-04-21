@@ -1,23 +1,29 @@
 package com.symphonyfintech.tips.view.tips;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.symphonyfintech.tips.R;
+import com.symphonyfintech.tips.adapters.tipsAdapter.BaseRecyclerViewAdapter;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.model.user.User;
 import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
@@ -29,31 +35,39 @@ import java.util.TimerTask;
  * Created by Tanush on 4/7/2017.
  */
 
-public class TipRowDetails extends Fragment {
-
-    private View mView;
+public class TipRowDetails extends AppCompatActivity {
+    //private View mView;
+    public static TipBean tip;
     private Timer timer ;
     private Handler myHandler;
     private String curr_price="NA",symbol="";
 
-    @Nullable
+    /*@Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.dialog_tips_details, container, false);
         myHandler = new Handler();
         return mView;
+    }*/
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dialog_tips_details);
+        setUI();
     }
 
-    public void setUI(final TipBean tip){
+    public void setUI(){
+        tip = BaseRecyclerViewAdapter.selectedTip;
         this.symbol = tip.instrumentID;
-        ((TextView) mView.findViewById(R.id.txt_tip_name)).setText(tip.symbol);
-        ((TextView) mView.findViewById(R.id.txt_tip_side)).setText(tip.side + " at ");
-        ((TextView) mView.findViewById(R.id.txt_status_tip)).setText("ACTIVE");
-        ((TextView) mView.findViewById(R.id.txt_target_Price)).setText("₹" + tip.targetPrice);
-        ((TextView) mView.findViewById(R.id.txt_stplss)).setText("₹" + tip.stopLoss);
-        ((TextView) mView.findViewById(R.id.txt_tip_description)).setText(tip.description);
-        ((TextView) mView.findViewById(R.id.tip_side_price)).setText("₹" + tip.price);
-        GraphView graph = (GraphView) mView.findViewById(R.id.graph);
+        ((TextView) findViewById(R.id.txt_tip_name)).setText(tip.symbol);
+        ((TextView) findViewById(R.id.txt_tip_side)).setText(tip.side + " at ");
+        ((TextView) findViewById(R.id.txt_status_tip)).setText("ACTIVE");
+        ((TextView) findViewById(R.id.txt_target_Price)).setText("₹" + tip.targetPrice);
+        ((TextView) findViewById(R.id.txt_stplss)).setText("₹" + tip.stopLoss);
+        ((TextView) findViewById(R.id.txt_tip_description)).setText(tip.description);
+        ((TextView) findViewById(R.id.tip_side_price)).setText("₹" + tip.price);
+        GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(1, 1),
                 new DataPoint(2, 2),
@@ -71,19 +85,19 @@ public class TipRowDetails extends Fragment {
         series.setThickness(5);
         graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.HORIZONTAL );
         graph.addSeries(series);
-        final User user = ((OneTouchMainActivity)getActivity()).getUser();
-        if(user.userType == User.GUEST_USER){
-            ((Button) mView.findViewById(R.id.btn_Execute_tip)).setEnabled(false);
-            ((Button) mView.findViewById(R.id.btn_Execute_tip)).setBackgroundColor(Color.GRAY);
-            //Toast.makeText(getActivity(),"Please Log In to execute a tip",Toast.LENGTH_SHORT).show();
+        //final User user = ((OneTouchMainActivity)getActivity()).getUser();
+        if(OneTouchMainActivity.userdetails.userType == User.GUEST_USER){
+            //((Button) findViewById(R.id.btn_Execute_tip)).setEnabled(false);
+            ((Button) findViewById(R.id.btn_Execute_tip)).setAlpha(.5f);
+            Toast.makeText(this,"Please log In to execute.",Toast.LENGTH_SHORT).show();
         }
         else{
-            ((Button) mView.findViewById(R.id.btn_Execute_tip)).setEnabled(true);
-            ((Button) mView.findViewById(R.id.btn_Execute_tip)).setOnClickListener(new View.OnClickListener() {
+            ((Button) findViewById(R.id.btn_Execute_tip)).setEnabled(true);
+            ((Button) findViewById(R.id.btn_Execute_tip)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Toast.makeText(getActivity(),"User Token: "+ user.getAcessToken() + ". Working on Execute Tip.",Toast.LENGTH_SHORT).show();
-                    ((OneTouchMainActivity)getActivity()).openExecuteTipFragment(tip);
+                    Intent intent = new Intent(v.getContext(), ExecuteTip.class);
+                    v.getContext().startActivity(intent);
                 }
             });
         }
@@ -107,7 +121,7 @@ public class TipRowDetails extends Fragment {
         myHandler.post(new Runnable() {
             @Override
             public void run() {
-                ((TextView) mView.findViewById(R.id.txt_live)).setText("₹" + curr_price);
+                ((TextView) findViewById(R.id.txt_live)).setText("₹" + curr_price);
             }
         });
     }
@@ -116,5 +130,20 @@ public class TipRowDetails extends Fragment {
         public void handleMessage(Message msg) {
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
 
 }

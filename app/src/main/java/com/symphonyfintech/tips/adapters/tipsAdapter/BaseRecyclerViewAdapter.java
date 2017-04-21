@@ -1,10 +1,12 @@
 package com.symphonyfintech.tips.adapters.tipsAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +24,9 @@ import com.symphonyfintech.tips.model.tips.HeaderItem;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.model.tips.TipItem;
 import com.symphonyfintech.tips.model.tips.TipList;
+import com.symphonyfintech.tips.view.advisors.AdvisorList;
 import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
+import com.symphonyfintech.tips.view.tips.TipRowDetails;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -42,15 +46,28 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     private final int CONTEXT_ADVISOR = 1;
     private int curr_page;
     DatabaseReference tipsFirebaseRef;
+    //DatabaseReference analyst;
+    //DatabaseReference favoriteAnalyst;
     final Handler myHandler;
     boolean firebaseUpdateWorking=false;
-    public static TipBean delectedTip;
+    public static TipBean selectedTip;
     private boolean monthly,today;
     private String userID;
     private Context mContext;
+    private List<AdvisorList> favAnalyst;
+    private List<AdvisorList> otherAnalyst;
 
     @NonNull
     private List<TipList> items = Collections.emptyList();
+
+    @NonNull
+    private List<AdvisorList> advisors = Collections.emptyList();
+
+    public BaseRecyclerViewAdapter(@NonNull List<AdvisorList> items, Context mContext){
+        this.mContext = mContext;
+        this.advisors = items;
+        myHandler = new Handler();
+    }
 
     public BaseRecyclerViewAdapter(@NonNull List<TipList> items, String userID, int curr_page, Context mContext){
         this.mContext = mContext;
@@ -103,7 +120,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 View itemView = inflater.inflate(R.layout.tips_list_item_header, parent, false);
                 return new HeaderViewHolder(itemView);
             }
-            case TipList.TYPE_EVENT: {
+            case TipList.TYPE_TIP: {
                 View itemView = inflater.inflate(R.layout.fragment_list_items, parent, false);
                 return new ItemViewHolder(itemView);
             }
@@ -124,15 +141,18 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 viewhold.txt_header.setText(header.getHeader());
                 break;
             }
-            case TipList.TYPE_EVENT: {
+            case TipList.TYPE_TIP: {
                 final TipItem tip = (TipItem) items.get(position);
                 ItemViewHolder viewHolder = (ItemViewHolder) holder;
                 createItemRow(viewHolder,tip.getTip());
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        selectedTip = tip.getTip();
+                        Intent intent = new Intent(v.getContext(), TipRowDetails.class);
+                        v.getContext().startActivity(intent);
                         //Toast.makeText(mContext,"Working on the execute page.",Toast.LENGTH_SHORT).show();
-                        ((OneTouchMainActivity) mContext).openDetailTipFragment(tip.getTip());
+                        //((OneTouchMainActivity) mContext).openDetailTipFragment(tip.getTip());
                     }
                 });
                 break;
@@ -152,26 +172,31 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         return items.get(position).getType();
     }
 
-    public Timer timer ;
+    public  Timer timer ;
 
     protected  void startTimer() {
         timer = new Timer("MyTimer");
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
+                if (OneTouchMainActivity.isLogin) {
+                    if (firebaseUpdateWorking)
+                        return;
 
-                if(firebaseUpdateWorking)
-                    return;
-
-                for(TipList tiptype :items){
-                    if(tiptype.getType() == TipList.TYPE_EVENT){
-                        TipBean tip = ((TipItem)tiptype).getTip();
-                        Long key= Long.parseLong(tip.instrumentID);
-                        Log.i("Live Price: ","===================================== "+ OneTouchMainActivity.marketData.get(key) + "===============================");
-                        if(OneTouchMainActivity.marketData.containsKey(key)){
-                            tip.livePrice =  OneTouchMainActivity.marketData.get(key)/100;
-                            createThread();
+                    for (TipList tiptype : items) {
+                        if (tiptype.getType() == TipList.TYPE_TIP) {
+                            TipBean tip = ((TipItem) tiptype).getTip();
+                            Long key = Long.parseLong(tip.instrumentID);
+                            Log.i("Base Live Price", " ===================================== " + OneTouchMainActivity.marketData.get(key) + "===============================");
+                            if (OneTouchMainActivity.marketData.containsKey(key)) {
+                                tip.livePrice = OneTouchMainActivity.marketData.get(key) / 100;
+                                createThread();
+                            }
                         }
                     }
+                }
+                else{
+                    timer.cancel();
+                    return;
                 }
             }
         }, 0, 5000);
@@ -325,13 +350,13 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             Log.i("Todays date: ", "****************************************** " + todaysDate);
         }
         if(tipByDates == todaysDate){
-            if(!today){
+            if(!today && curr_page == CONTEXT_TIPS){
                 items.add(new HeaderItem("Today's Tips"));
                 today = true;
             }
         }
         else{
-            if(!monthly){
+            if(!monthly && curr_page == CONTEXT_TIPS){
                 items.add(new HeaderItem("This Month"));
                 monthly = true;
             }

@@ -11,6 +11,7 @@ import java.nio.ByteOrder;
 
 public class simpleDataFech implements Runnable {
     String Id;
+
     public simpleDataFech(String id) {
         this.Id =id;
     }
@@ -27,22 +28,22 @@ public class simpleDataFech implements Runnable {
          */
         @Override
         public void run() {
-            Parser extractor =  new Parser(ByteOrder.LITTLE_ENDIAN);
-            ZMQ.Socket subscriber = OneTouchMainActivity.ctx.socket(ZMQ.SUB);
-            subscriber.connect("tcp://103.69.169.10:5289");
-            subscriber.subscribe(ZMQ.SUBSCRIPTION_ALL);
+            Parser extractor = new Parser(ByteOrder.LITTLE_ENDIAN);
+                ZMQ.Socket subscriber = OneTouchMainActivity.ctx.socket(ZMQ.SUB);
+                subscriber.connect("tcp://103.69.169.10:5289");
+                subscriber.subscribe(ZMQ.SUBSCRIPTION_ALL);
 //            subscriber.subscribe(Id.getBytes());
 //            subscriber.subscribe("2885".getBytes());
 //      System.out.println(subscriber.getTCPKeepAlive() > 0 ? true  : false);
-            while (true) {
-                byte[] msg = subscriber.recv();
-                ByteBuffer buffer = ByteBuffer.wrap(msg);
-                buffer.order(ByteOrder.LITTLE_ENDIAN);
+                while (OneTouchMainActivity.isLogin) {
+                    byte[] msg = subscriber.recv();
+                    ByteBuffer buffer = ByteBuffer.wrap(msg);
+                    buffer.order(ByteOrder.LITTLE_ENDIAN);
 //                System.out.println("******** "+buffer.getInt(35));
-                final MarketPicture result = extractor.fillMarketPicture(msg, 0);
+                    final MarketPicture result = extractor.fillMarketPicture(msg, 0);
 //                System.out.println("Key : "+result.getInstrumentIdentifier() +" Value :"+(result.getLastTradedPrice()/100));
-                OneTouchMainActivity.marketData.put(result.getInstrumentIdentifier() , Double.parseDouble(result.getLastTradedPrice()+""));
+                    OneTouchMainActivity.marketData.put(result.getInstrumentIdentifier(), Double.parseDouble(result.getLastTradedPrice() + ""));
 //                System.out.println(result.toString());
-            }
+                }
         }
     }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.CustomAdapter.ImageLoadTask;
 import com.symphonyfintech.tips.adapters.advisorAdapter.AdvisorAdapter;
@@ -33,8 +34,9 @@ public class Advisor extends AppCompatActivity {
         setContentView(R.layout.activity_advisor);
 
         selected = AdvisorAdapter.selectedTip;
-        Advisor.this.setTitle(selected.name);
+        //Advisor.this.setTitle(selected.name);
         profilepicImg = (ImageView) findViewById(R.id.profilepicImg);
+        ((TextView)findViewById(R.id.advisor_display_title)).setText(selected.name);
         show_adv_tipcount = (TextView)findViewById(R.id.show_adv_tipcount);
         show_adv_tipcount.setText(selected.tipCont);
         show_adv_tipExecuted = (TextView)findViewById(R.id.show_adv_tipExecuted);
@@ -43,7 +45,8 @@ public class Advisor extends AppCompatActivity {
         show_adv_tip_description.setText(selected.about);
         tippostedBy = (TextView)findViewById(R.id.tippostedBy);
         tippostedBy.setText("TIP POSTED BY "+selected.name.toUpperCase());
-        new ImageLoadTask(selected.profileIcon,profilepicImg).execute();
+        Glide.with(getBaseContext()).load(selected.profileIcon).into(profilepicImg);
+        //new ImageLoadTask(selected.profileIcon,profilepicImg).execute();
         initViews();
     }
     RecyclerView.Adapter adapter;

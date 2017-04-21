@@ -22,6 +22,6 @@ public class TipItem extends TipList{
 
     @Override
     public int getType() {
-        return TYPE_EVENT;
+        return TYPE_TIP;
     }
 }

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.CustomAdapter.CustomOrderPager;
 import com.symphonyfintech.tips.adapters.orderAdapter.OrderAdapter;
+import com.symphonyfintech.tips.model.user.User;
 import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 /**
@@ -38,6 +39,10 @@ public class OrdersFragment extends Fragment {
     }
 
     private void initViews(){
+        if(OneTouchMainActivity.userdetails.userType == User.GUEST_USER){
+            view.setEnabled(false);
+            view.setAlpha(.5f);
+        }
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
 
         final TabLayout.Tab tab_pending = tabLayout.newTab();

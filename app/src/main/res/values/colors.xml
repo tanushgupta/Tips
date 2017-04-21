@@ -19,7 +19,7 @@
     <color name="white">#ffffff</color>
     <color name="dot_not_selected">#030303</color>
 
-    <color name="list_header_color">#d3d3d3</color>
+    <color name="list_header_color">#f7f7f7</color>
     <color name="list_header_text_color">#545454</color>
 
     <color name="black">#000000</color>

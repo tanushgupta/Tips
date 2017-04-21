@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+
         <activity
             android:name=".view.general.WelcomeActivity"
             android:label="@string/app_name"
@@ -22,9 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".adapters.CustomAdapter.LoginAdapter"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
+
         <activity
             android:name=".view.general.SignUpActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
@@ -34,22 +37,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".view.general.OneTouchMainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
-        <activity android:name=".view.general.ScrollingActivity"></activity>
-        <activity
-            android:name=".view.advisors.Advisor"
-            android:parentActivityName=".view.general.OneTouchMainActivity">
-        </activity>
-        <activity android:name=".view.advisors.advisor_row"></activity>
-        <activity
-            android:name=".view.orders.Orders"
-            android:label="@string/label_orders"
-            android:parentActivityName=".view.general.OneTouchMainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
-    </application>
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
+        <activity android:name=".view.advisors.Advisor"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".view.general.OneTouchMainActivity"/>
+
+        <activity android:name=".view.tips.TipRowDetails"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".view.general.OneTouchMainActivity"/>
+
+        <activity android:name=".view.tips.ExecuteTip"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".view.general.OneTouchMainActivity"/>
+
+    </application>
 </manifest>

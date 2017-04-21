@@ -1,19 +1,20 @@
-package com.symphonyfintech.tips.model.tips;
+package com.symphonyfintech.tips.model.advisor;
 
 import android.support.annotation.NonNull;
 
-import com.symphonyfintech.tips.view.advisors.AdvisorList;
+import com.symphonyfintech.tips.model.tips.TipList;
+import com.symphonyfintech.tips.view.advisors.*;
 
 /**
  * Created by Tanush on 4/14/2017.
  */
 
-public class HeaderItem extends TipList{
+public class AdvisorHeaderItem extends AdvisorList{
 
     @NonNull
     private String txtHeader;
 
-    public HeaderItem(@NonNull String txtHeader) {
+    public AdvisorHeaderItem(@NonNull String txtHeader) {
         this.txtHeader = txtHeader;
     }
 

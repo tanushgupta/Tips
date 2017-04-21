@@ -7,7 +7,7 @@ package com.symphonyfintech.tips.model.tips;
 public abstract class TipList {
 
     public static final int TYPE_HEADER = 0;
-    public static final int TYPE_EVENT = 1;
+    public static final int TYPE_TIP = 1;
 
     abstract public int getType();
 }

@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
+
+    <group>
+        <item
+            android:id="@+id/menu_welcome"
+            android:title="Log In"
+            />
+        <item
+            android:id="@+id/menu_log_out"
+            android:title="Logout"/>
+        <item
+            android:id="@+id/menu_usrprofile"
+            android:title="Profile"
+            ></item>
+        <item
+            android:id="@+id/menu_about"
+            android:title="About 1Touch" />
+        <item
+            android:id="@+id/menu_close"
+            android:title="Exit"
+            />
+    </group>
+
+    <!--<item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />-->
 </menu>

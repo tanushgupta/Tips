@@ -4,17 +4,11 @@
         <shape
             android:shape="rectangle"
             android:visible="true"
-            android:dither="true"
             android:useLevel="false">
             <gradient
-                android:startColor="#66AAFF00"
-                android:endColor="#6600FF00"
+                android:startColor="@color/light_graph_blue"
+                android:endColor="@color/light_graph_blue"
                 android:angle="270"/>
-            <corners
-                android:radius="15dp"/>
-            <size
-                android:width="37dp"
-                android:height="37dp" />
             <stroke
                 android:width="4dp"
                 android:color="#0000ffff"/>
@@ -24,20 +18,7 @@
         <shape
             android:shape="rectangle"
             android:visible="true"
-            android:dither="true"
-            android:useLevel="false">
-            <gradient
-                android:startColor="#ff0000"
-                android:endColor="#ff0000"
-                android:angle="270"/>
-            <corners
-                android:radius="15dp"/>
-            <size
-                android:width="37dp"
-                android:height="37dp" />
-            <stroke
-                android:width="4dp"
-                android:color="#0000ffff"/>
+            android:useLevel="true">
         </shape>
     </item>
 </selector>
