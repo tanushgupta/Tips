@@ -49,19 +49,17 @@ public class SignUpActivity extends AppCompatActivity implements OnClickListener
         pattern = Pattern.compile(EMAIL_PATTERN);
     }
 
+    //Creating the mail with appropriate data.
     private String composeEmail() {
         m.set_subject(subject);
         m.set_body(body);
         try {
             if(m.send()) {
-                //Toast.makeText(this, "Email was sent successfully.", Toast.LENGTH_LONG).show();
                 return "Email was sent successfully.";
             } else {
-                //Toast.makeText(this, "Email was not sent.", Toast.LENGTH_LONG).show();
-                return "Email was sent successfully.";
+                return "Email was not sent successfully.";
             }
         } catch(Exception e) {
-            //Toast.makeText(this, "There was a problem sending the email.", Toast.LENGTH_LONG).show();
             Log.i("MailApp", "Could not send email", e);
             return "Could not send email" + e;
         }
@@ -83,21 +81,16 @@ public class SignUpActivity extends AppCompatActivity implements OnClickListener
                     "broker: " + ((EditText)findViewById(R.id.user_broker)).getText().toString() +"\n"+
                     "client_account_id: " + ((EditText)findViewById(R.id.user_client_id)).getText().toString() +"\n"+
                     "user_type: " + consumer +"\n";
-
             new Connection().execute("");
         }
     }
 
+    //Async thread to send mail to Ajit sir's email address for now.
     class Connection extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //pDialog = new ProgressDialog(SignUpActivity.this);
-            //pDialog.setMessage("Attempting Sign up...");
-            //pDialog.setIndeterminate(false);
-            //pDialog.setCancelable(false);
-            //pDialog.show();
             pDialog = ProgressDialog.show(SignUpActivity.this, "", "Attempting Sign up...", true);
         }
 

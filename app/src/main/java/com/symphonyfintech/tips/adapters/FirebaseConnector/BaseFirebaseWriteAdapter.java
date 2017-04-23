@@ -27,5 +27,4 @@ public class BaseFirebaseWriteAdapter {
     public void addTips(String advisor,int subscribed){
     }
 
-
 }
