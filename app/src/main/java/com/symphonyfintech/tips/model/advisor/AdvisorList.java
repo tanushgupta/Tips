@@ -5,6 +5,7 @@ package com.symphonyfintech.tips.model.advisor;
  */
 
 public abstract class AdvisorList {
+
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_ADVISOR = 1;
 

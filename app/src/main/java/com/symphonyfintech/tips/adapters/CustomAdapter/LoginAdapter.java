@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.symphonyfintech.tips.R;
+import com.symphonyfintech.tips.adapters.FirebaseConnector.BaseFirebaseConnectSingletonAdapter;
 import com.symphonyfintech.tips.model.user.User;
 import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
@@ -86,8 +87,10 @@ public class LoginAdapter extends AppCompatActivity implements Response.Listener
                 Toast.makeText(this,response.get("errorMessage").toString(),Toast.LENGTH_SHORT).show();
             }
             else{
+                User.getInstance(response.get("acessToken").toString(),userName);
+                BaseFirebaseConnectSingletonAdapter.getInstance(userName);
                 Intent intent = new Intent(LoginAdapter.this, OneTouchMainActivity.class);
-                intent.putExtra("User",new User(response.get("acessToken").toString(),userName));
+                //intent.putExtra("User",user);
                 LoginAdapter.this.startActivity(intent);
                 finish();
             }
@@ -108,11 +111,11 @@ public class LoginAdapter extends AppCompatActivity implements Response.Listener
         }
         catch (NullPointerException ex){
             Toast.makeText(this,"Server Down, Try again later.",Toast.LENGTH_SHORT).show();
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
         catch (Exception ex){
-            Toast.makeText(this,"Exception: " + ex.toString(),Toast.LENGTH_SHORT).show();
-            ex.printStackTrace();
+            Toast.makeText(this,"Error caused in server.",Toast.LENGTH_SHORT).show();
+            //ex.printStackTrace();
         }
     }
 

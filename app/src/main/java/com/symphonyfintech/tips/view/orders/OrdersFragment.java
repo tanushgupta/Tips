@@ -39,7 +39,7 @@ public class OrdersFragment extends Fragment {
     }
 
     private void initViews(){
-        if(OneTouchMainActivity.userdetails.userType == User.GUEST_USER){
+        if(User.getInstance().AuthType == User.GUEST_USER){
             view.setEnabled(false);
             view.setAlpha(.5f);
         }

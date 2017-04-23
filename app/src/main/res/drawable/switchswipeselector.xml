@@ -9,9 +9,6 @@
                 android:startColor="@color/light_graph_blue"
                 android:endColor="@color/light_graph_blue"
                 android:angle="270"/>
-            <stroke
-                android:width="4dp"
-                android:color="#0000ffff"/>
         </shape>
     </item>
     <item android:state_checked="false">

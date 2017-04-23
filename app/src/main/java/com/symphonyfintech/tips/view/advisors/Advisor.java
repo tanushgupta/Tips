@@ -1,7 +1,6 @@
 package com.symphonyfintech.tips.view.advisors;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,10 +14,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.symphonyfintech.tips.R;
-import com.symphonyfintech.tips.adapters.CustomAdapter.ImageLoadTask;
 import com.symphonyfintech.tips.adapters.advisorAdapter.AdvisorAdapter;
-import com.symphonyfintech.tips.adapters.advisorAdapter.AdvisorTipsAdapter;
-import com.symphonyfintech.tips.adapters.tipsAdapter.BaseRecyclerViewAdapter;
+import com.symphonyfintech.tips.adapters.FirebaseConnector.BaseRecyclerViewAdapter;
 import com.symphonyfintech.tips.model.advisor.AdvisorBean;
 import com.symphonyfintech.tips.model.tips.TipList;
 
@@ -55,8 +52,6 @@ public class Advisor extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        //adapter = new AdvisorTipsAdapter(selected.userId);
-        //recyclerView.setAdapter(adapter);
         adapter = new BaseRecyclerViewAdapter(new ArrayList<TipList>(),selected.userId,1,getApplication());
         recyclerView.setAdapter(adapter);
 

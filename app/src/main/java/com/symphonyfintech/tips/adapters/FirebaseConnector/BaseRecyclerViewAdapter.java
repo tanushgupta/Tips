@@ -1,4 +1,4 @@
-package com.symphonyfintech.tips.adapters.tipsAdapter;
+package com.symphonyfintech.tips.adapters.FirebaseConnector;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +23,6 @@ import com.symphonyfintech.tips.model.tips.HeaderItem;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.model.tips.TipItem;
 import com.symphonyfintech.tips.model.tips.TipList;
-import com.symphonyfintech.tips.view.advisors.AdvisorList;
 import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 import com.symphonyfintech.tips.view.tips.TipRowDetails;
 
@@ -41,33 +39,24 @@ import java.util.TimerTask;
  */
 
 public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static TipBean selectedTip;
 
     private final int CONTEXT_TIPS = 0;
     private final int CONTEXT_ADVISOR = 1;
+
     private int curr_page;
-    DatabaseReference tipsFirebaseRef;
-    //DatabaseReference analyst;
-    //DatabaseReference favoriteAnalyst;
+
+    private DatabaseReference tipsFirebaseRef;
+
     final Handler myHandler;
+
     boolean firebaseUpdateWorking=false;
-    public static TipBean selectedTip;
-    private boolean monthly,today;
+
     private String userID;
     private Context mContext;
-    private List<AdvisorList> favAnalyst;
-    private List<AdvisorList> otherAnalyst;
 
     @NonNull
     private List<TipList> items = Collections.emptyList();
-
-    @NonNull
-    private List<AdvisorList> advisors = Collections.emptyList();
-
-    public BaseRecyclerViewAdapter(@NonNull List<AdvisorList> items, Context mContext){
-        this.mContext = mContext;
-        this.advisors = items;
-        myHandler = new Handler();
-    }
 
     public BaseRecyclerViewAdapter(@NonNull List<TipList> items, String userID, int curr_page, Context mContext){
         this.mContext = mContext;
@@ -76,8 +65,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         if(curr_page == CONTEXT_ADVISOR){
             this.userID = userID;
         }
-        monthly = false;
-        today = false;
         myHandler = new Handler();
         tipsFirebaseRef = FirebaseDatabase.getInstance().getReference("Tips/");
         getListofTipsfromFirebase();
@@ -117,7 +104,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         switch (viewType) {
             case TipList.TYPE_HEADER: {
-                View itemView = inflater.inflate(R.layout.tips_list_item_header, parent, false);
+                View itemView = inflater.inflate(R.layout.list_item_header, parent, false);
                 return new HeaderViewHolder(itemView);
             }
             case TipList.TYPE_TIP: {
@@ -131,13 +118,11 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        Log.i("Count: ", "------------------------------------- " + position + "-----------------------------------");
         int viewType = getItemViewType(position);
         switch (viewType) {
             case TipList.TYPE_HEADER: {
                 HeaderItem header = (HeaderItem)items.get(position);
                 HeaderViewHolder viewhold = (HeaderViewHolder) holder;
-                // your logic here
                 viewhold.txt_header.setText(header.getHeader());
                 break;
             }
@@ -151,8 +136,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                         selectedTip = tip.getTip();
                         Intent intent = new Intent(v.getContext(), TipRowDetails.class);
                         v.getContext().startActivity(intent);
-                        //Toast.makeText(mContext,"Working on the execute page.",Toast.LENGTH_SHORT).show();
-                        //((OneTouchMainActivity) mContext).openDetailTipFragment(tip.getTip());
                     }
                 });
                 break;
@@ -173,7 +156,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public  Timer timer ;
-
     protected  void startTimer() {
         timer = new Timer("MyTimer");
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -262,7 +244,9 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    boolean monthly,today;
     private void getListofTipsfromFirebase(){
+
         tipsFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -270,7 +254,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 Log.i("", "**************** SnapShot" + dataSnapshot.toString());
-                Object dtata = dataSnapshot.getValue();
                 HashMap<String, HashMap<String, Object>> value1 =
                         (HashMap<String, HashMap<String, Object>>) dataSnapshot.getValue();
 
@@ -278,14 +261,11 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     items.clear();
                     monthly = false;
                     today = false;
-                    //notifyDataSetChanged();
                 }
 
                 for (HashMap.Entry<?, ?> entry2 : value1.entrySet()) {
-                    //print keys and values
                     TipBean tipbean = new TipBean();
                     for (HashMap.Entry<?, ?> entry : ((HashMap<String, Object>) entry2.getValue()).entrySet()) {
-//                        System.out.println("**********\t " + entry.getKey() + " : " + entry.getValue());
                         if (entry.getKey().equals("stopLoss"))
                             tipbean.stopLoss = entry.getValue().toString();
                         else if (entry.getKey().equals("tipId"))
@@ -315,7 +295,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                         else if (entry.getKey().equals("price"))
                             tipbean.price = entry.getValue().toString();
                     }
-//                    System.out.println(" \n\n\n new Entry ");
                     tipbean.fetchDataForThisTip();
                     if(curr_page == CONTEXT_ADVISOR && userID.equals(tipbean.tipSenderID)){
                         updateItems(tipbean);
@@ -325,10 +304,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                             updateItems(tipbean);
                         }
                     }
-                    //items.add(item);
-                    //notifyItemInserted(items.size() == 0 ? 0 : items.size() - 1);
-                    //notifyDataSetChanged();
-                    //Collections.sort(tipList);
                     firebaseUpdateWorking = false;
                 }
             }
@@ -346,8 +321,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         String todaysDate = sdf.format(new Date());
         if (tip.tipCreatedAtTime.contains(" ")) {
             tipByDates = tip.tipCreatedAtTime.substring(0, tip.tipCreatedAtTime.indexOf(" "));
-            Log.i("TipDate: ", "****************************************** " + tipByDates);
-            Log.i("Todays date: ", "****************************************** " + todaysDate);
         }
         if(tipByDates == todaysDate){
             if(!today && curr_page == CONTEXT_TIPS){
@@ -365,66 +338,5 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         notifyItemInserted(items.size() - 1);
         //notifyDataSetChanged();
-    }
-
-    public void updateRows(HashMap<String, HashMap<String, Object>> objTips){
-        firebaseUpdateWorking = true;
-        if(items.size()>0 && objTips != null){
-            items.clear();
-            monthly = false;
-            today = false;
-            //notifyDataSetChanged();
-        }
-
-        for (HashMap.Entry<?, ?> entry2 : objTips.entrySet()) {
-            //print keys and values
-            TipBean tipbean = new TipBean();
-            for (HashMap.Entry<?, ?> entry : ((HashMap<String, Object>) entry2.getValue()).entrySet()) {
-//                        System.out.println("**********\t " + entry.getKey() + " : " + entry.getValue());
-                if (entry.getKey().equals("stopLoss"))
-                    tipbean.stopLoss = entry.getValue().toString();
-                else if (entry.getKey().equals("tipId"))
-                    tipbean.tipId = entry.getValue().toString();
-                else if (entry.getKey().equals("productType"))
-                    tipbean.productType = entry.getValue().toString();
-                else if (entry.getKey().equals("triggerPrice"))
-                    tipbean.triggerPrice = entry.getValue().toString();
-                else if (entry.getKey().equals("targetPrice"))
-                    tipbean.targetPrice = entry.getValue().toString();
-                else if (entry.getKey().equals("tipCreatedAtTime"))
-                    tipbean.tipCreatedAtTime = entry.getValue().toString();
-                else if (entry.getKey().equals("instrumentID"))
-                    tipbean.instrumentID = entry.getValue().toString();
-                else if (entry.getKey().equals("orderQuantity"))
-                    tipbean.orderQuantity = entry.getValue().toString();
-                else if (entry.getKey().equals("tipExpiry"))
-                    tipbean.tipExpiry = entry.getValue().toString();
-                else if (entry.getKey().equals("side"))
-                    tipbean.side = entry.getValue().toString();
-                else if (entry.getKey().equals("symbol"))
-                    tipbean.symbol = entry.getValue().toString();
-                else if (entry.getKey().equals("tipSenderID"))
-                    tipbean.tipSenderID = entry.getValue().toString();
-                else if (entry.getKey().equals("description"))
-                    tipbean.description = entry.getValue().toString();
-                else if (entry.getKey().equals("price"))
-                    tipbean.price = entry.getValue().toString();
-            }
-//                    System.out.println(" \n\n\n new Entry ");
-            tipbean.fetchDataForThisTip();
-            if(curr_page == CONTEXT_ADVISOR && userID.equals(tipbean.tipSenderID)){
-                updateItems(tipbean);
-            }
-            else{
-                if(curr_page == CONTEXT_TIPS){
-                    updateItems(tipbean);
-                }
-            }
-            //items.add(item);
-            //notifyItemInserted(items.size() == 0 ? 0 : items.size() - 1);
-            //notifyDataSetChanged();
-            //Collections.sort(tipList);
-            firebaseUpdateWorking = false;
-        }
     }
 }

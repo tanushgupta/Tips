@@ -16,7 +16,7 @@
         <com.symphonyfintech.tips.view.general.CollapsingImageLayout
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:minHeight="80dp"
+            android:minHeight="0dp"
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 

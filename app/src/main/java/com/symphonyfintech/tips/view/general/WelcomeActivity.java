@@ -1,6 +1,5 @@
 package com.symphonyfintech.tips.view.general;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,22 +24,23 @@ import com.symphonyfintech.tips.R;
 import com.symphonyfintech.tips.adapters.CustomAdapter.AppConnectionStatus;
 import com.symphonyfintech.tips.adapters.CustomAdapter.CustomSwipeAdapter;
 import com.symphonyfintech.tips.adapters.CustomAdapter.LoginAdapter;
+import com.symphonyfintech.tips.adapters.FirebaseConnector.BaseFirebaseConnectSingletonAdapter;
 import com.symphonyfintech.tips.model.user.User;
 
 public class WelcomeActivity extends AppCompatActivity implements OnClickListener{
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
     private ViewPager viewPager;
     private ImageView[] dots;
     private LinearLayout dotLayout;
-    private ProgressDialog progress;
+
     private TextView main_header_text, secondary_header_text;
-    private AlertDialog dialog;
+
     private static int img_count;
 
     private void init(){
-        //btnSignIn = (Button) findViewById(R.id.btn_sign_in);
         dotLayout = (LinearLayout)findViewById(R.id.pager_dots);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         main_header_text = (TextView) findViewById(R.id.txtView_main_head);
@@ -173,9 +173,6 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
     @Override
     public void onDestroy(){
         super.onDestroy();
-        if (dialog !=null && dialog.isShowing() ){
-            dialog.cancel();
-        }
     }
 
     @Override
@@ -207,8 +204,9 @@ public class WelcomeActivity extends AppCompatActivity implements OnClickListene
                                     Toast.LENGTH_SHORT).show();
                         }
                         else{
+                            User.getInstance();
+                            //BaseFirebaseConnectSingletonAdapter.getInstance();
                             Intent intent = new Intent(WelcomeActivity.this, OneTouchMainActivity.class);
-                            intent.putExtra("User",new User());
                             WelcomeActivity.this.startActivity(intent);
                             finish();
                         }

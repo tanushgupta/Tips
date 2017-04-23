@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.symphonyfintech.tips.R;
-import com.symphonyfintech.tips.adapters.tipsAdapter.BaseRecyclerViewAdapter;
+import com.symphonyfintech.tips.adapters.FirebaseConnector.BaseRecyclerViewAdapter;
 import com.symphonyfintech.tips.model.tips.TipList;
 import com.symphonyfintech.tips.model.tips.TipBean;
 
@@ -31,16 +31,11 @@ public class TipsListFragment extends Fragment {
     public static ArrayList<TipBean> tipsAdaptorVal = new ArrayList<>();
 
     Intent advisor_intent;
-    static boolean isPersistenceEnabled =false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.content_home, container, false);
-        if(isPersistenceEnabled=false) {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            isPersistenceEnabled=true;
-        }
         initViews();
         return view;
     }

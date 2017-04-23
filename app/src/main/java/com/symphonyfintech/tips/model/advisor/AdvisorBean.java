@@ -13,4 +13,5 @@ public class AdvisorBean {
   public String tipCont;
   public String userId;
   public String about;
+  public String subscribed;
 }

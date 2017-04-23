@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.symphonyfintech.tips.R;
+import com.symphonyfintech.tips.adapters.CustomAdapter.OrderExecution;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
@@ -59,29 +60,9 @@ public class ExecuteTip extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        /*
-                  "acessToken":"DC2EE5BB098F73FBE906253A37C704D4",
-                  "tipId":"-KfhYAF93CzarxO9gAJs",
-                  "tipSenderID":"QuantXpress",
-                  "user": "himanshu",
-                  "side": "BUY",
-                  "quantity": "50",
-                  "symbol": "RELIANCE",
-                  "securityID": "2885",
-                  "securityType": "COMMON_STOCK",
-                  "exchange": "NSECM",
-                  "price": "1000",
-                  "maxPrice":"900",
-                  "minPrice":"1110",
-                  "account": "SFT04",
-                  "timeInForce": "DAY",
-                  "targetPrice":"1050",
-                  "stopPrice": "900",
-                  "orderType": "MARKET"
-         */
-        final String accessToken = OneTouchMainActivity.userdetails.getAcessToken();
-
-        Toast.makeText(this,"Working on execution",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"Working on execution",Toast.LENGTH_SHORT).show();
+        new OrderExecution(this,tip,send_ordr_qnty.getText().toString(),send_ordr_price.getText().toString(),
+                send_ordr_targetPrice.getText().toString(),send_ordr_stopLoss.getText().toString());
         finish();
 
     }

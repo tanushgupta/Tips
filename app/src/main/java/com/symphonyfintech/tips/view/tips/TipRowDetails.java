@@ -1,6 +1,5 @@
 package com.symphonyfintech.tips.view.tips;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,11 +8,9 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +20,7 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.symphonyfintech.tips.R;
-import com.symphonyfintech.tips.adapters.tipsAdapter.BaseRecyclerViewAdapter;
+import com.symphonyfintech.tips.adapters.FirebaseConnector.BaseRecyclerViewAdapter;
 import com.symphonyfintech.tips.model.tips.TipBean;
 import com.symphonyfintech.tips.model.user.User;
 import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
@@ -86,7 +83,7 @@ public class TipRowDetails extends AppCompatActivity {
         graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.HORIZONTAL );
         graph.addSeries(series);
         //final User user = ((OneTouchMainActivity)getActivity()).getUser();
-        if(OneTouchMainActivity.userdetails.userType == User.GUEST_USER){
+        if(User.getInstance().AuthType == User.GUEST_USER){
             //((Button) findViewById(R.id.btn_Execute_tip)).setEnabled(false);
             ((Button) findViewById(R.id.btn_Execute_tip)).setAlpha(.5f);
             Toast.makeText(this,"Please log In to execute.",Toast.LENGTH_SHORT).show();

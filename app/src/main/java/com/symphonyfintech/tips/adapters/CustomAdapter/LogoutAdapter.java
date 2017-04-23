@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.symphonyfintech.tips.model.user.User;
 import com.symphonyfintech.tips.view.general.OneTouchMainActivity;
 
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ public class LogoutAdapter implements Response.Listener<JSONObject>,Response.Err
 
     public LogoutAdapter(Context mContext){
         this.mContext = mContext;
-        this.token = OneTouchMainActivity.userdetails.getAcessToken();
+        this.token = User.getInstance().getAcessToken();
         checkLogout();
     }
 
