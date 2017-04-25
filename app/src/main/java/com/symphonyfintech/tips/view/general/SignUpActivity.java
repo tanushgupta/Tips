@@ -44,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity implements OnClickListener
         setContentView(R.layout.activity_signup);
         findViewById(R.id.btn_sign_up).setOnClickListener(this);
         m = new Mail();
-        String[] toArr = {"tanush1122@gmail.com"};
+        String[] toArr = {"ajit.kumar@symphonyfintech.com"};
         m.set_to(toArr);
         pattern = Pattern.compile(EMAIL_PATTERN);
     }

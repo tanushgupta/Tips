@@ -134,8 +134,18 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
                         selectedTip = tip.getTip();
-                        Intent intent = new Intent(v.getContext(), TipRowDetails.class);
-                        v.getContext().startActivity(intent);
+                        try{
+                            if(selectedTip.instrumentID != null) {
+                                Intent intent = new Intent(v.getContext(), TipRowDetails.class);
+                                v.getContext().startActivity(intent);
+                            }
+                        }
+                        catch (NullPointerException enull){
+                            enull.printStackTrace();
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
                     }
                 });
                 break;
@@ -166,12 +176,20 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     for (TipList tiptype : items) {
                         if (tiptype.getType() == TipList.TYPE_TIP) {
-                            TipBean tip = ((TipItem) tiptype).getTip();
-                            Long key = Long.parseLong(tip.instrumentID);
-                            Log.i("Base Live Price", " ===================================== " + OneTouchMainActivity.marketData.get(key) + "===============================");
-                            if (OneTouchMainActivity.marketData.containsKey(key)) {
-                                tip.livePrice = OneTouchMainActivity.marketData.get(key) / 100;
-                                createThread();
+                            try {
+                                TipBean tip = ((TipItem) tiptype).getTip();
+                                Long key = Long.parseLong(tip.instrumentID); //OneTouchMainActivity.marketData.get(key)
+                                Log.i("Base Live Price", " ===================================== " + tip.tipId.toString() + "===============================");
+                                if (OneTouchMainActivity.marketData.containsKey(key)) {
+                                    tip.livePrice = OneTouchMainActivity.marketData.get(key) / 100;
+                                    createThread();
+                                }
+                            }
+                            catch (NullPointerException enull){
+                                enull.printStackTrace();
+                            }
+                            catch (Exception ex){
+                                ex.printStackTrace();
                             }
                         }
                     }

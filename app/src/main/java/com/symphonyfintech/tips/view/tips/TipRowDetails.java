@@ -105,11 +105,16 @@ public class TipRowDetails extends AppCompatActivity {
         timer = new Timer("MyTimer");
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                Long key= Long.parseLong(symbol);
-                Log.i("Live Price: ","===================================== "+ OneTouchMainActivity.marketData.get(key) + "===============================");
-                if(OneTouchMainActivity.marketData.containsKey(key)){
-                    curr_price =  Double.toString(OneTouchMainActivity.marketData.get(key)/100);
-                    createThread();
+                try{
+                    Long key= Long.parseLong(symbol);
+                    Log.i("Live Price: ","===================================== "+ OneTouchMainActivity.marketData.get(key) + "===============================");
+                    if(OneTouchMainActivity.marketData.containsKey(key)){
+                        curr_price =  Double.toString(OneTouchMainActivity.marketData.get(key)/100);
+                        createThread();
+                    }
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
                 }
             }
         }, 0, 5000);

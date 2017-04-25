@@ -166,5 +166,4 @@ public class Mail extends javax.mail.Authenticator {
         this._subject = _subject;
     }
 
-    // more of the getters and setters …..
 }
